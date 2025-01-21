@@ -5,7 +5,6 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "git": "^0.1.5",
-    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5"
   },
@@ -18,7 +17,11 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^22.10.7",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.9",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
@@ -28,10 +31,10 @@
   "scripts": {
     "start": "tsc && node ./dist/app.js",
     "mon": "tsc && nodemon ./dist/app.js",
-    "test": "tsc && jest ./test --runInBand",
-    "testp": "tsc && jest ./test/post.test.ts --runInBand",
-    "testa": "tsc && jest ./test/auth.test.ts --runInBand",
-    "testc": "tsc && jest ./test/comment.test.ts --runInBand",
+    "test": "tsc && jest --detectOpenHandles --forceExit --runInBand --coverage",
+    "testp": "tsc && jest --detectOpenHandles --forceExit post.test.ts",
+    "testa": "tsc && jest --detectOpenHandles --forceExit auth.test.ts",
+    "testc": "tsc && jest --detectOpenHandles --forceExit comment.test.ts"
   },
   "repository": {
     "type": "git",

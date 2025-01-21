@@ -5,13 +5,15 @@ import bodyParser from 'body-parser'
 dotenv.config();
 import postsRoutes from './routes/post_route';
 import commentRoutes from './routes/comment_route';
+import authRoutes from './routes/auth_route';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/posts', postsRoutes);
-app.use('/comments', commentRoutes);
+app.use('/posts/:postId/comments', commentRoutes);
+app.use('/auth', authRoutes);
 
 const appMain = async()=> {
     return new Promise<Express>((resolve, reject) => {

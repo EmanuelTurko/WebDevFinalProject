@@ -39,8 +39,7 @@ const register = async (req: Request, res: Response) => {
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
-    const findUser = await userModel.findOne({ username: email });
-    const findEmail = await userModel.findOne({ email: email });
+    const findUser = await userModel.findOne({ username: username });
     if(!username){
         res.status(400).send("username is required");
         return;
@@ -49,6 +48,7 @@ const register = async (req: Request, res: Response) => {
         res.status(400).send("username already exists");
         return;
     }
+    const findEmail = await userModel.findOne({ email: email });
     if(!email){
         res.status(400).send("email is required");
         return;
@@ -142,7 +142,8 @@ const logout = async (req: Request, res: Response) => {
                 res.status(402).send("invalid token");
                 return;
             }
-            user.refreshToken = user.refreshToken.filter((token) => token !== refreshToken);
+
+            user.refreshToken = user.refreshToken.filter(token => token !== refreshToken);
             await user.save();
             res.status(200).send("logout successful");
         } catch (err: any) {
@@ -222,7 +223,12 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         }
     });
 }
-
-export {register, login, logout, refresh};
+const authController = {
+    register,
+    login,
+    logout,
+    refresh,
+}
+export default authController;
 
 

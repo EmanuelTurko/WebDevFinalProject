@@ -20,7 +20,6 @@ export class _Controller<T>{
                 .limit(Number(limit));
 
             res.status(200).send(data);
-
             } catch(err:any){
             res.status(400).send({error: err.message});
         }
@@ -50,7 +49,7 @@ export class _Controller<T>{
             await updatedData.save();
             res.status(200).send(updatedData);
         } catch (err: any) {
-            res.status(400).send({error: err.message});
+            res.status(402).send({error: err.message});
         }
     };
     async delete(req:Request,res:Response) {
@@ -59,11 +58,10 @@ export class _Controller<T>{
             const deletedData = await this.model.findByIdAndDelete(id);
             if (!deletedData) {
                 res.status(404).send('Data not found');
-                return;
             }
             res.status(200).send(deletedData);
         } catch (err: any) {
-            res.status(400).send({error: err.message});
+            res.status(403).send({error: err.message});
         }
     };
     async getById(req:Request,res:Response){
@@ -72,13 +70,22 @@ export class _Controller<T>{
             const data = await this.model.findById(id);
             if(!data){
                 res.status(404).send('Data not found');
-                return;
             }
             res.status(200).send(data);
         } catch(err:any){
-            res.status(400).send({error: err.message});
+            res.status(404).send({error: err.message});
         }
     }
-    async like(req:Request,res:Response) {
+    async getByOwner(req:Request,res:Response){
+        try{
+            const {owner} = req.params;
+            const data = await this.model.find({owner: owner});
+            if(!data){
+                res.status(404).send('Data not found');
+            }
+            res.status(200).send(data);
+        } catch(err:any){
+            res.status(405).send({error: err.message});
+        }
     }
 }

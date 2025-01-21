@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 export interface Comment{
     content:string,
     owner:string,
-    post:string,
-    likes:number,
+    postId?:string,
+    likes:string[],
+    likesCount:number,
 }
 const commentSchema = new mongoose.Schema<Comment>({
     content: {
@@ -15,11 +16,15 @@ const commentSchema = new mongoose.Schema<Comment>({
         type: String,
         required: true,
     },
-    post: {
+    postId: {
         type: String,
         required: true,
     },
     likes: {
+        type: [String],
+        default: [],
+    },
+    likesCount: {
         type: Number,
         default: 0,
     }

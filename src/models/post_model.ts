@@ -1,13 +1,17 @@
 import mongoose from 'mongoose';
 
-
+export interface Content{
+    text:string,
+    imageUrl:string,
+    createdAt:Date,
+    updatedAt:Date,
+}
 export interface Post {
     title:string,
-    content:string,
-    likes:number,
+    content:Content,
+    likes:string[],
+    likesCount:number,
     owner:string,
-
-
 }
 const postSchema = new mongoose.Schema<Post>({
     title: {
@@ -37,6 +41,10 @@ const postSchema = new mongoose.Schema<Post>({
         required: true,
     },
     likes: {
+        type: [String],
+        default: [],
+    },
+    likesCount: {
         type: Number,
         default: 0,
     },
