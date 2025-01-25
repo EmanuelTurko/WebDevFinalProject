@@ -8,23 +8,23 @@ const useRegister = () => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     const registerUser = async (user: User) => {
-        if (isSubmitting) return; // Prevent duplicate submissions while submitting
+        if (isSubmitting) return;
 
-        setIsSubmitting(true); // Start the submission process
-        setError(null); // Reset the error state before the submission
+        setIsSubmitting(true);
+        setError(null);
 
         try {
-            const { request } = authService.register(user); // Destructure request and abort from the service
-            const res = await request; // Wait for the request to complete
+            const { request } = authService.register(user);
+            const res = await request;
 
-            setUser(res.data); // Store the user data in the state
+            setUser(res.data);
             console.log(res.status);
         } catch (error) {
             if (!(error instanceof CanceledError)) {
-                setError(error); // Handle error if request fails
+                setError(error);
             }
         } finally {
-            setIsSubmitting(false); // Stop submitting state after the process completes
+            setIsSubmitting(false);
         }
     };
 
