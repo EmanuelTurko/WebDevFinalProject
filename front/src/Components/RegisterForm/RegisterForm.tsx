@@ -1,56 +1,90 @@
-import  { FC } from 'react';
+import {FC, useState, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
+import styles from './RegisterForm.module.css';
+import blankAvatar from '../../assets/blankAvatar.webp';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faImage} from '@fortawesome/free-solid-svg-icons';
+import {userSchema} from './RegisterSchema';
+import useRegister from '../../Hooks/Register/useRegister.ts';
+import {User} from "../../Services/Interface/User.ts";
+import uploadImage from "../../Hooks/Register/useImageUpload.ts";
 
-const userSchema = z.object({
-    username: z.string()
-        .min(3,("Username must be at least 3 characters long"))
-        .max(30),
-    email: z.string()
-        .refine(
-            (email) => /\S+@\S+\.\S+/.test(email),
-            { message: "Invalid email format" }
-        ),
-    password: z.string()
-        .min(6,("Password must be at least 6 characters long"))
-        .max(30)
-        .refine(
-            (password) => /[A-Z]/.test(password),
-            { message: "Password must contain at least one uppercase letter" }
-        ),
-});
+
 type userFormData = z.infer<typeof userSchema>;
 const Form:FC = () => {
-    const {register,handleSubmit, formState:{errors}}
+    const {register,handleSubmit, formState:{errors}, watch}
         = useForm<userFormData>({resolver:zodResolver(userSchema)});
 
-    const onSubmit = (data:userFormData) => {
-        console.log(data);
+    const [imageUrl] = watch(['imageUrl']);
+    const [file,setFile] = useState<File | null>(null);
+    const inputFileRef:{current: HTMLInputElement | null} = { current : null};
+    const { setUser,setIsSubmitting } = useRegister();
+
+
+    useEffect(()=>{
+        if(imageUrl){
+           setFile(imageUrl[0]);
+           console.log(imageUrl[0]);
+        }
+    },[imageUrl])
+
+    const onFormSubmit = async (data:userFormData) => {
+        const user:User = {
+            username : data.username,
+            email : data.email,
+            password:data.password,
+            imageUrl:'',
+        }
+        if(data.imageUrl){
+            user.imageUrl = await uploadImage(data.imageUrl[0],data.username);
+            if(!user.imageUrl){
+                setIsSubmitting(false);
+                return;
+            }
+            console.log(user.imageUrl);
+        }
+        setUser(user);
+        setIsSubmitting(true);
     }
+    const {ref,...rest} = register('imageUrl');
+
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label htmlFor='username' className='form-label'>Name:</label>
+        <div className={styles.main}>
+            <form className={styles.form} onSubmit={handleSubmit(onFormSubmit)}>
+                <div className={styles.avatarDiv}>
+                   <img src={file ? URL.createObjectURL(file) : blankAvatar} alt='' className={styles.avatar}/>
+                <FontAwesomeIcon onClick={()=>{inputFileRef.current?.click()}}
+                                 icon={faImage} size='2x' className={styles.avatarIcon}/>
+                </div>
+
+                    <input {...rest} ref={(e)=>
+                    {ref(e); inputFileRef.current = e}}
+                           className={styles.inputFile} type="file" accept={'image/png ,image/jpeg'}/>
+
+                <div className={styles.formUsername}>
                     <input {...register('username')}
                            type="text"
-                        className="form-control" placeholder="Enter your name"/>
-                           {errors.username && <p className="text-danger">{errors.username.message}</p>}
+                           className={styles.formControl} placeholder="Username"/>
+                    {errors.username && <p className={styles.textDanger}>{errors.username.message}</p>}
                 </div>
-                <div>
-                    <label htmlFor='email' className='form-label'>Email:</label>
+                <div  className={styles.formEmail}>
                     <input {...register('email')}
-                        type="email" className="form-control" placeholder="Enter your email"/>
-                    {errors.email && <p className="text-danger">{errors.email.message}</p>}
+                        type="email" className={styles.formControl} placeholder="Email"/>
+                    {errors.email && <p className={styles.textDanger}>{errors.email.message}</p>}
                 </div>
-                <div>
-                    <label htmlFor='password' className='form-label'>Password:</label>
+                <div  className={styles.formPassword}>
                     <input {...register('password')}
-                        type="password" className="form-control" placeholder="Enter your password"/>
-                    {errors.password && <p className="text-danger">{errors.password.message}</p>}
+                           type="password" className={styles.formControl} placeholder="Password"/>
+                    {errors.password && <p className={styles.textDanger}>{errors.password.message}</p>}
                 </div>
-                <button type="submit">Register</button>
+                <div className={styles.formButton}>
+                    <button className={'btn btn-primary'} type="submit" >Register</button>
+                </div>
+                <div className={styles.loginRef}>
+                    <label>Already on X? </label> <a href="/login">Sign in</a>
+                </div>
             </form>
         </div>
     )
