@@ -6,27 +6,28 @@ import styles from './RegisterForm.module.css';
 import blankAvatar from '../../assets/blankAvatar.webp';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faImage} from '@fortawesome/free-solid-svg-icons';
-import {userSchema} from './RegisterSchema';
-import useRegister from '../../Hooks/Register/useRegister.ts';
+import {registerSchema} from './RegisterSchema';
+import useRegister from '../../Hooks/useRegister.ts';
 import {User} from "../../Services/Interface/User.ts";
-import uploadImage from "../../Hooks/Register/useImageUpload.ts";
+import uploadImage from "../../Services/uploadImage.ts";
 
 
-type userFormData = z.infer<typeof userSchema>;
-const Form:FC = () => {
+type userFormData = z.infer<typeof registerSchema>;
+const RegisterForm:FC = () => {
     const {register,handleSubmit, formState:{errors}, watch}
-        = useForm<userFormData>({resolver:zodResolver(userSchema)});
+        = useForm<userFormData>({resolver:zodResolver(registerSchema)});
 
     const [imageUrl] = watch(['imageUrl']);
     const [file,setFile] = useState<File | null>(null);
     const inputFileRef:{current: HTMLInputElement | null} = { current : null};
-    const { setUser,setIsSubmitting } = useRegister();
+    const {registerUser} = useRegister();
+    const [flag,setFlag] = useState<boolean>(false);
 
 
     useEffect(()=>{
         if(imageUrl){
            setFile(imageUrl[0]);
-           console.log(imageUrl[0]);
+           setFlag(!flag);
         }
     },[imageUrl])
 
@@ -37,16 +38,13 @@ const Form:FC = () => {
             password:data.password,
             imageUrl:'',
         }
-        if(data.imageUrl){
+        if(flag && data.imageUrl){
             user.imageUrl = await uploadImage(data.imageUrl[0],data.username);
             if(!user.imageUrl){
-                setIsSubmitting(false);
                 return;
             }
-            console.log(user.imageUrl);
         }
-        setUser(user);
-        setIsSubmitting(true);
+        await registerUser(user);
     }
     const {ref,...rest} = register('imageUrl');
 
@@ -90,4 +88,4 @@ const Form:FC = () => {
     )
 }
 
-export default Form;
+export default RegisterForm;

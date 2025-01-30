@@ -32,7 +32,7 @@ const ItemsList: FC<ItemsListProps> = ({ title, items, onItemSelected }) => {
         <div className={PostListStyle.container}>
             <h1>{title}</h1>
             {items.length == 0 && <p>No items</p>}
-            {items.length != 0 && <ul className="list-group">
+            {items.length != 0 && <ul className= "list-group">
                 {items.map((item, index) => {
                     return <li
                         className={selectedIndex == index ? 'list-group-item active' : 'list-group-item'}

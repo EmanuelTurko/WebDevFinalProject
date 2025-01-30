@@ -7,6 +7,7 @@ import postsRoutes from './routes/post_route';
 import commentRoutes from './routes/comment_route';
 import authRoutes from './routes/auth_route';
 import fileRoutes from './routes/file_route';
+import userRoutes from './routes/user_route';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -44,6 +45,7 @@ if(process.env.NODE_ENV === 'development'){
 app.use('/posts', postsRoutes);
 app.use('/posts/:postId/comments', commentRoutes);
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 app.use('/public/',express.static('public'));
 app.use('/file/', fileRoutes);
 

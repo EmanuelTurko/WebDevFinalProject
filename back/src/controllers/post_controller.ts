@@ -35,21 +35,21 @@ class PostController extends _Controller<Post>{
             res.status(401).send({error: err.message});
         }
     }
-    async like(req:Request,res:Response) {
-       try {
-           const {id} = req.params;
-           const userId = req.body._id;
-           console.log(userId);
-           console.log(id);
-           console.log(req.body)
-           const user = await userModel.findById(userId);
-           if (!user) {
-               res.status(404).send('User not found');
-               return;
-           }
+        async like(req:Request,res:Response) {
+           try {
+               const {id} = req.params;
+               const userId = req.body._id;
+               console.log(userId);
+               console.log(id);
+               const user = await userModel.findById(userId);
+               if (!user) {
+                   res.status(404).send('User not found');
+                   return;
+               }
+               console.log(user);
            const post = await postModel.findById(id);
            if (!post) {
-               res.status(404).send('Post not found');
+               res.status(404).send('PostTemplate not found');
                return;
            }
            const postOwner = await userModel.findOne({username: post.owner});
@@ -68,12 +68,14 @@ class PostController extends _Controller<Post>{
            if (isLiked) {
                post.likes = post.likes.filter((username) => username !== user.username);
                post.likesCount -= 1;
-               user.likedPosts = user.likedPosts.filter((id) => id.toString() !== post._id.toString());
+               user.likedPosts = user.likedPosts.filter((postId) => postId.toString() !== id);
+               console.log("this post was liked");
+               console.log(user.likedPosts);
                postOwner.likesCount -= 1;
            } else {
                post.likes.push(user.username);
                post.likesCount += 1;
-               user.likedPosts.push(post._id);
+               user.likedPosts.push(id);
                postOwner.likesCount += 1;
 
            }

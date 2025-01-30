@@ -12,7 +12,10 @@ const usePosts = () => {
         setIsLoading(true)
         const {request,abort} =postService.getAllPosts()
         request.then((res)=>{
-            setPosts(res.data)
+            const sortedPosts = res.data.sort((a:Post,b:Post)=> {
+                return new Date(b.content.createdAt).getTime() - new Date(a.content.createdAt).getTime()
+            });
+            setPosts(sortedPosts)
             setIsLoading(false)
         }).catch((error) => {
             if(!(error instanceof CanceledError)){

@@ -1,8 +1,14 @@
 export interface Post {
     title:string,
-    content:string,
+    content:Content,
     owner:string,
     likes?:string[],
     likesCount?:number,
     _id?:string,
+}
+export interface Content{
+    text:string,
+    imageUrl?:string,
+    createdAt:Date,
+    updatedAt:Date,
 }

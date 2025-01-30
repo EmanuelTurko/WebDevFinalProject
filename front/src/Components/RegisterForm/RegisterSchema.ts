@@ -1,6 +1,6 @@
 import {z} from "zod";
 
-const userSchema = z.object({
+const registerSchema = z.object({
     username: z.string()
         .min(3,("Username must be at least 3 characters long"))
         .max(30),
@@ -19,4 +19,4 @@ const userSchema = z.object({
     imageUrl: z.instanceof(FileList).optional()
 });
 
-export {userSchema};
+export {registerSchema};

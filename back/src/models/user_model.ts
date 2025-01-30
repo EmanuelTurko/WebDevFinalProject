@@ -9,7 +9,7 @@ export interface User{
     refreshToken?:string[],
     posts?:mongoose.Types.ObjectId[],
     comments?:mongoose.Types.ObjectId[],
-    likedPosts?:mongoose.Types.ObjectId[],
+    likedPosts?:string[],
     likesCount?:number,
     imageUrl?:string,
 }
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema<User>({
         ref:'comments',
     }],
     likedPosts:[{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         ref:'posts',
     }],
     likesCount:{

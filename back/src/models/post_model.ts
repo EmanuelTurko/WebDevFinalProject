@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export interface Content{
     text:string,
-    imageUrl:string,
+    imageUrl?:string,
     createdAt:Date,
     updatedAt:Date,
 }
@@ -25,7 +25,7 @@ const postSchema = new mongoose.Schema<Post>({
         },
         imageUrl: {
             type: String,
-            required: true,
+            default: null,
         },
         createdAt: {
             type: Date,

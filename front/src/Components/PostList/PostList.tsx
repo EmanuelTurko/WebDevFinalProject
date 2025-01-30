@@ -1,16 +1,22 @@
-import {FC} from 'react'
-import ItemsList from '../itemList.tsx'
-import usePosts from '../../Hooks/usePosts.ts'
+import { FC } from 'react';
+import usePosts from '../../Hooks/usePosts.ts';
+import PostTemplate from './postTemplate/postTemplate.tsx';
+import styles from './postList.module.css';
 
-const  PostList:FC = () => {
-    const {posts,isLoading,error} = usePosts()
-  return (
-    <>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
-        <ItemsList title='list' items={posts.map(post=>post.title)} onItemSelected={() => {}}/>
-    </>
-  )
-}
+const PostList: FC = () => {
+    const { posts, isLoading, error } = usePosts();
 
-export default PostList
+    return (
+        <div className={styles.postListContainer}>
+            {isLoading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+            {posts.map((post) => (
+                <div key={post._id} className={styles.card}>
+                    <PostTemplate post={post} />
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default PostList;

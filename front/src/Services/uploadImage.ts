@@ -1,4 +1,4 @@
-import apiClient from '../../Services/api-client.ts';
+import apiClient from './api-client.ts';
 
 
 const uploadImage = (file: File,username:string):Promise<string> => {

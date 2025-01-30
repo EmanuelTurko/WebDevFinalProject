@@ -36,6 +36,7 @@ const generateTokens = (_id: string): {accessToken:string, refreshToken:string} 
     return {accessToken, refreshToken};
 }
 const register = async (req: Request, res: Response) => {
+    console.log(req.body);
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
@@ -44,7 +45,7 @@ const register = async (req: Request, res: Response) => {
     if(req.body.imageUrl){
          imageUrl = req.body.imageUrl;
     } else {
-        imageUrl = '/public/blankAvatar.webp';
+        imageUrl = 'http://localhost:3001/public/blankAvatar.webp';
     }
     if(!username){
         res.status(400).send("username is required");
