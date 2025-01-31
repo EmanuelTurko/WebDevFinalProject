@@ -11,7 +11,7 @@ export class _Controller<T>{
 
     async getAll(req:Request,res:Response){
         try {
-            const {page = 1 , limit = 12} = req.query;
+            const {page = 1 , limit = 99} = req.query;
             const filter = req.query as any;
             const data = await this.model
                 .find(filter)

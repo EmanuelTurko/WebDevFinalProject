@@ -141,7 +141,6 @@ describe('Middleware Test', () => {
         const res = await request(app)
             .post('/posts')
             .send({
-                title: 'First post',
                 content: {
                     text: 'This is the first post',
                     imageUrl: 'https://example.com/image.jpg',
@@ -158,7 +157,6 @@ describe('Middleware Test', () => {
         const res = await request(app)
             .post('/posts')
             .send({
-                title: 'First post',
                 content: {
                     text: 'This is the first post',
                     imageUrl: 'https://example.com/image.jpg',
@@ -176,7 +174,6 @@ describe('Middleware Test', () => {
         const res = await request(app)
             .post('/posts')
             .send({
-                title: 'First post',
                 content: {
                     text: 'This is the first post',
                     imageUrl: 'https://example.com/image.jpg',

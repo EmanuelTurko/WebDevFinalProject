@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import usePosts from '../../Hooks/usePosts.ts';
+import useGetPosts from '../../Hooks/useGetPosts';
 import PostTemplate from './postTemplate/postTemplate.tsx';
 import styles from './postList.module.css';
 
 const PostList: FC = () => {
-    const { posts, isLoading, error } = usePosts();
+    const { posts, isLoading, error } = useGetPosts();
 
     return (
         <div className={styles.postListContainer}>

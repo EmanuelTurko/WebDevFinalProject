@@ -9,5 +9,5 @@ export interface User{
     comments?:string[],
     likedPosts?:string[],
     likesCount?:number,
-    imageUrl?:string | null,
+    imageUrl?:string | undefined,
 }

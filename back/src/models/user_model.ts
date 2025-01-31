@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema<User>({
     },
     imageUrl:{
         type:String,
-        default: null,
+        default: `http://localhost:3001/public/blankAvatar.webp`,
     }
 })
 const userModel = mongoose.model<User>('users', userSchema);

@@ -259,7 +259,7 @@ router.put('/:id', authMiddleware, PostController.update.bind(PostController));
  *       404:
  *         description: Post or user not found
  */
-router.put('/:id/like', PostController.like.bind(PostController));
+router.put('/:id/like',authMiddleware, PostController.like.bind(PostController));
 /**
  * @swagger
  * /posts/{id}:

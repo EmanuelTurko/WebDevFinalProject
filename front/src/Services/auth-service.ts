@@ -18,5 +18,16 @@ const login = (user: User | undefined) => {
 
     return {request, abort: () => abortController.abort()}
 }
+const logout = (refreshToken:string) => {
+    const abortController = new AbortController()
+    const request  = apiClient
+        .post('/auth/logout',{
+                refreshToken: `${refreshToken}`
+            },{
+                signal:abortController.signal
+            });
+    console.log("token is..... ",refreshToken);
+    return {request, abort: () => abortController.abort()}
+}
 
-export default {register,login}
+export default {register,login,logout}

@@ -1,5 +1,4 @@
 export interface Post {
-    title:string,
     content:Content,
     owner:string,
     likes?:string[],

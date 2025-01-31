@@ -43,6 +43,7 @@ const register = async (req: Request, res: Response) => {
     let imageUrl;
     if(req.body.imageUrl){
          imageUrl = req.body.imageUrl;
+         console.log(imageUrl);
     } else {
         imageUrl = 'http://localhost:3001/public/blankAvatar.webp';
     }
@@ -122,6 +123,8 @@ const login = async (req: Request, res: Response) => {
     }
 }
 const logout = async (req: Request, res: Response) => {
+    console.log("body token..... ",req.body.refreshToken);
+    console.log("body....",req.body);
     const refreshToken = req.body.refreshToken;
     if (!refreshToken) {
         res.status(402).send("Missing refreshToken");
@@ -152,6 +155,7 @@ const logout = async (req: Request, res: Response) => {
 
             user.refreshToken = user.refreshToken.filter(token => token !== refreshToken);
             await user.save();
+            console.log("logout");
             res.status(200).send("logout successful");
         } catch (err: any) {
             res.status(402).send(err.message);

@@ -21,8 +21,8 @@
 }
 .avatarIcon{
     position: absolute;
-    top:0px;
-    left:0px;
+    top:0;
+    left:0;
     width: 15px;
     height: 15px;
 }
@@ -45,14 +45,14 @@
 }
 .formControl {
     display: flex;
-    justify-content: center; /* Centers content horizontally */
-    align-items: center;     /* Centers content vertically */
-    text-align: center;      /* Ensures text is centered */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     width: 100%;
     height: calc(2.25rem + 2px);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
-    line-height: calc(2.25rem + 2px); /* Ensures vertical centering */
+    line-height: calc(2.25rem + 2px);
     color: #495057;
     background-color: #fff;
     background-clip: padding-box;
@@ -102,11 +102,11 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.5rem;
-    display: block; /* Ensure button takes full width */
+    display: block;
 }
 
 .formButton button {
-    width: 100%; /* Ensure the button itself takes full width */
+    width: 100%;
     padding: 0.5rem;
     border: none;
     cursor: pointer;

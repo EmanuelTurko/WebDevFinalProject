@@ -10,10 +10,12 @@ import {registerSchema} from './RegisterSchema';
 import useRegister from '../../Hooks/useRegister.ts';
 import {User} from "../../Services/Interface/User.ts";
 import uploadImage from "../../Services/uploadImage.ts";
+import {useNavigate} from 'react-router-dom';
 
 
 type userFormData = z.infer<typeof registerSchema>;
 const RegisterForm:FC = () => {
+    const navigate = useNavigate();
     const {register,handleSubmit, formState:{errors}, watch}
         = useForm<userFormData>({resolver:zodResolver(registerSchema)});
 
@@ -21,13 +23,11 @@ const RegisterForm:FC = () => {
     const [file,setFile] = useState<File | null>(null);
     const inputFileRef:{current: HTMLInputElement | null} = { current : null};
     const {registerUser} = useRegister();
-    const [flag,setFlag] = useState<boolean>(false);
 
 
     useEffect(()=>{
         if(imageUrl){
            setFile(imageUrl[0]);
-           setFlag(!flag);
         }
     },[imageUrl])
 
@@ -38,13 +38,14 @@ const RegisterForm:FC = () => {
             password:data.password,
             imageUrl:'',
         }
-        if(flag && data.imageUrl){
+        if(data.imageUrl){
             user.imageUrl = await uploadImage(data.imageUrl[0],data.username);
             if(!user.imageUrl){
                 return;
             }
         }
         await registerUser(user);
+        navigate('/');
     }
     const {ref,...rest} = register('imageUrl');
 

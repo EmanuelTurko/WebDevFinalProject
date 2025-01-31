@@ -46,7 +46,7 @@ app.use('/posts', postsRoutes);
 app.use('/posts/:postId/comments', commentRoutes);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
-app.use('/public/',express.static('public'));
+app.use('/',express.static('public'));
 app.use('/file/', fileRoutes);
 
 const appMain = async()=> {

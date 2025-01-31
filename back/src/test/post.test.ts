@@ -12,6 +12,7 @@ beforeAll(async () => {
     await userModel.deleteMany({});
     await postModel.deleteMany({});
     const res = await request(app).post('/auth/register').send(testUser);
+    console.log(res.body);
     const res2= await request(app).post('/auth/login').send(testUser);
     testUser.accessToken = res2.body.accessToken;
     testUser.refreshToken = res2.body.refreshToken;
@@ -26,7 +27,6 @@ const testUser : User = {
     password:'123456',
 }
 const testPost = {
-    title: 'test title',
     content:{
         text: 'test content',
         imageUrl: 'test image url',
@@ -61,9 +61,9 @@ describe('Post Test', ()=> {
         const res2 = await request(app)
             .put(baseUrl+'/'+postId)
             .set({authorization: 'jwt ' + testUser.accessToken})
-            .send({title: 'updated title'});
+            .send({content: 'updated content'});
         expect(res2.status).toBe(200);
-        expect(res2.body.title).toBe('updated title');
+        expect(res2.body.content.text).toBe('updated title');
     });
     test('Get Post by Id - Not Found', async () => {
         const res = await request(app)

@@ -6,3 +6,23 @@ Content-Type: application/json
     "username": "test22",
     "password": "test2222"
   }
+
+###
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "Kx6k7syo4cp"
+  }
+
+###
+GET http://localhost:3001/users/admin
+
+###
+PUT http://localhost:3001/posts/6794e90b578e88bb11576a82/like
+Content-Type: application/json
+
+{
+    "_id": "679a70d12835a498ef1c102b"
+  }

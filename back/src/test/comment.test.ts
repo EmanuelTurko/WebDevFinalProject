@@ -19,6 +19,7 @@ beforeAll (async () => {
     const res = await request(app)
         .post('/auth/register')
         .send(testUser);
+    console.log(res.body);
     const res2 = await request(app)
         .post('/auth/login')
         .send(testUser);
@@ -43,7 +44,6 @@ const testUser: User = {
     password: '123456',
 }
 const testPost = {
-    title: 'test title',
     content: {
         text: 'test content',
         imageUrl: 'test image url',

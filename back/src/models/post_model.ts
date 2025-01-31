@@ -7,17 +7,12 @@ export interface Content{
     updatedAt:Date,
 }
 export interface Post {
-    title:string,
     content:Content,
     likes:string[],
     likesCount:number,
     owner:string,
 }
 const postSchema = new mongoose.Schema<Post>({
-    title: {
-        type: String,
-        required: true,
-    },
     content: {
         text: {
             type: String,
