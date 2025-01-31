@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { Request, Response,NextFunction } from 'express';
-import mongoose from 'mongoose';
 import userModel from '../models/user_model';
 import bcrypt from 'bcrypt';
 dotenv.config();
