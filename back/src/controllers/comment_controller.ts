@@ -36,7 +36,6 @@ class CommentController extends _Controller<Comment>{
         }
     }
     async like(req:Request, res:Response) {
-        console.log('1');
         try {
             const { id } = req.params;
             const userId = req.body.userId;
@@ -46,7 +45,6 @@ class CommentController extends _Controller<Comment>{
                 res.status(404).send('User not found');
                 return;
             }
-        console.log('2');
             const comment = await commentModel.findById(id);
             if (!comment) {
                 res.status(404).send('Comment not found');
@@ -59,10 +57,8 @@ class CommentController extends _Controller<Comment>{
             }
             if (commentOwner.likesCount === undefined) {
                 commentOwner.likesCount = 0;
-            console.log('3');
             }
             const isLiked = comment.likes.includes(user.username);
-            console.log("before:", comment.likes);
 
             if (isLiked) {
                 comment.likes = comment.likes.filter((username) => username !== user.username);

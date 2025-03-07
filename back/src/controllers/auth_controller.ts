@@ -35,7 +35,6 @@ const generateTokens = (_id: string): {accessToken:string, refreshToken:string} 
     return {accessToken, refreshToken};
 }
 const register = async (req: Request, res: Response) => {
-    console.log(req.body);
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
@@ -43,10 +42,11 @@ const register = async (req: Request, res: Response) => {
     let imageUrl;
     if(req.body.imageUrl){
          imageUrl = req.body.imageUrl;
-         console.log(imageUrl);
+         console.log("imageUrl",imageUrl);
     } else {
         imageUrl = 'http://localhost:3001/public/blankAvatar.webp';
     }
+    console.log("imageUrl",imageUrl);
     if(!username){
         res.status(400).send("username is required");
         return;
@@ -82,6 +82,7 @@ const register = async (req: Request, res: Response) => {
             imageUrl: imageUrl,
         });
         await user.save();
+        console.log("user created", user.username);
         res.status(200).send(user);
         return;
     } catch(err:any){
@@ -123,45 +124,69 @@ const login = async (req: Request, res: Response) => {
     }
 }
 const logout = async (req: Request, res: Response) => {
-    console.log("body token..... ",req.body.refreshToken);
-    console.log("body....",req.body);
     const refreshToken = req.body.refreshToken;
+    console.log("refreshToken",refreshToken);
     if (!refreshToken) {
-        res.status(402).send("Missing refreshToken");
-        return;
+        res.status(400).send("Missing refreshToken");
+        return
     }
+
     if (!process.env.TOKEN_SECRET) {
-        res.status(402).send("server error");
-        return;
+        res.status(500).send("Server error: TOKEN_SECRET not configured");
+        return
     }
-    jwt.verify(refreshToken, process.env.TOKEN_SECRET, async (err: any, user: any) => {
+    console.log("bla");
+    jwt.verify(refreshToken, process.env.TOKEN_SECRET, async (err:any, user:any) => {
         if (err) {
-            res.status(402).send("invalid token");
-            return;
+            console.log(err.name);
+            if (err.name === "TokenExpiredError") {
+                console.log("Token expired");
+                const invalidUser = await userModel.findOne({refreshToken: refreshToken});
+                if (invalidUser) {
+                    invalidUser.refreshToken = [];
+                    console.log("Invalid token, force logout");
+                    await invalidUser.save();
+                    return;
+                }
+
+                res.status(401).send("Token expired, force logout");
+                return
+            } else {
+                console.log("Invalid token:", err.name);
+                res.status(401).send("Invalid token");
+                return
+            }
         }
+        console.log("bla2");
         const userId = user._id;
+
         try {
             const user = await userModel.findById(userId);
             if (!user) {
-                res.status(402).send("internal error");
-                return;
+                res.status(404).send("User not found");
+                return
             }
-            if (!user.refreshToken || user.refreshToken.includes(refreshToken) === undefined) {
+
+            if (!user.refreshToken || !user.refreshToken.includes(refreshToken)) {
                 user.refreshToken = [];
                 await user.save();
-                res.status(402).send("invalid token");
-                return;
+               res.status(401).send("Invalid token");
+                return
             }
 
             user.refreshToken = user.refreshToken.filter(token => token !== refreshToken);
             await user.save();
-            console.log("logout");
-            res.status(200).send("logout successful");
-        } catch (err: any) {
-            res.status(402).send(err.message);
+            console.log("Logout successful");
+
+            res.status(200).send("Logout successful");
+            return
+        } catch (err) {
+            console.error("Error during logout:", err);
+            res.status(500).send("Internal server error");
+            return
         }
     });
-}
+};
 const refresh = async (req: Request, res: Response) => {
     const refreshToken = req.body.refreshToken;
     if (!refreshToken) {

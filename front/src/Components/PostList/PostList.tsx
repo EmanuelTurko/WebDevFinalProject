@@ -3,6 +3,7 @@ import useGetPosts from '../../Hooks/useGetPosts';
 import PostTemplate from './postTemplate/postTemplate.tsx';
 import styles from './postList.module.css';
 
+
 const PostList: FC = () => {
     const { posts, isLoading, error } = useGetPosts();
 

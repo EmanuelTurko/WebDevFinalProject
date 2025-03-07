@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
 import styles from './RegisterForm.module.css';
+import fromStyle from '../Navbar/Form.module.css';
 import blankAvatar from '../../assets/blankAvatar.webp';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faImage} from '@fortawesome/free-solid-svg-icons';
@@ -13,12 +14,14 @@ import uploadImage from "../../Services/uploadImage.ts";
 import {useNavigate} from 'react-router-dom';
 
 
+interface RegisterFormProps{
+    openLogin: () => void;
+}
 type userFormData = z.infer<typeof registerSchema>;
-const RegisterForm:FC = () => {
+const RegisterForm:FC<RegisterFormProps> = ({openLogin}) => {
     const navigate = useNavigate();
     const {register,handleSubmit, formState:{errors}, watch}
         = useForm<userFormData>({resolver:zodResolver(registerSchema)});
-
     const [imageUrl] = watch(['imageUrl']);
     const [file,setFile] = useState<File | null>(null);
     const inputFileRef:{current: HTMLInputElement | null} = { current : null};
@@ -28,6 +31,7 @@ const RegisterForm:FC = () => {
     useEffect(()=>{
         if(imageUrl){
            setFile(imageUrl[0]);
+           console.log("file");
         }
     },[imageUrl])
 
@@ -40,17 +44,21 @@ const RegisterForm:FC = () => {
         }
         if(data.imageUrl){
             user.imageUrl = await uploadImage(data.imageUrl[0],data.username);
+            console.log(user.imageUrl);
             if(!user.imageUrl){
                 return;
             }
         }
-        await registerUser(user);
-        navigate('/');
+        await registerUser(user).then(()=>{
+            window.location.reload();
+            navigate('/');
+        })
     }
     const {ref,...rest} = register('imageUrl');
 
     return (
-        <div className={styles.main}>
+        <div className={styles.wrapper}>
+            <div className={`${styles.formContainer} ${fromStyle.registerForm}`}>
             <form className={styles.form} onSubmit={handleSubmit(onFormSubmit)}>
                 <div className={styles.avatarDiv}>
                    <img src={file ? URL.createObjectURL(file) : blankAvatar} alt='' className={styles.avatar}/>
@@ -78,13 +86,16 @@ const RegisterForm:FC = () => {
                            type="password" className={styles.formControl} placeholder="Password"/>
                     {errors.password && <p className={styles.textDanger}>{errors.password.message}</p>}
                 </div>
-                <div className={styles.formButton}>
-                    <button className={'btn btn-primary'} type="submit" >Register</button>
-                </div>
+                    <button className={styles.formButton} type="submit" >Register</button>
                 <div className={styles.loginRef}>
-                    <label>Already on X? </label> <a href="/login">Sign in</a>
+                    <label>Already on X? </label>
+                    <a href="#" onClick={(e) => {
+                        e.preventDefault();
+                       openLogin();
+                    }}>Sign in</a>
                 </div>
             </form>
+            </div>
         </div>
     )
 }

@@ -1,15 +1,10 @@
-.main {
-    height: 100vh;
-    width: 100vw;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-.avatarDiv{
+
+.avatarDiv {
     position: relative;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    display: flex;
+    justify-content: center;
+    background-color: #101010;
+    align-items: center;
     margin-bottom: 1rem;
 }
 .avatar {
@@ -26,20 +21,23 @@
     width: 15px;
     height: 15px;
 }
+
 .form {
     display:flex;
-    background-color: lightgrey;
     flex-direction: column;
     justify-content:center;
     align-items:center;
+    width: 430px;
+    background-color: #101010;
     padding: 25px 40px;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .formUsername, .formEmail, .formPassword{
     display:flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     width: 100%;
     position: relative;
 }
@@ -54,19 +52,19 @@
     font-size: 1rem;
     line-height: calc(2.25rem + 2px);
     color: #495057;
-    background-color: #fff;
+    background-color: #1a1a1a;
     background-clip: padding-box;
-    border: 1px solid #ced4da;
+    border: 1px solid #333;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .formControl:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #80bdff;
+    color: #ffffff;
+    background-color: #495057;
+    border-color: #fdfdfd;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(37, 38, 38, 0.25);
 }
 
 .formControl::-webkit-input-placeholder {
@@ -80,9 +78,8 @@
 .formControl:-ms-input-placeholder {
     color: #6c757d;
 }
-.formControl::placeholder{
-    width:100%;
-    text-align:center;
+.formControl::placeholder {
+    color: #777;
 }
 .form .textDanger{
     color: rgba(255, 0, 0, 0.71);
@@ -90,19 +87,22 @@
     bottom: 1.4rem;
     left:5px;
     width:100%;
-    font-size: 0.63rem;
+    font-size: 1.1rem;
     font-stretch: ultra-condensed;
     text-align:center;
 }
 .form .formButton {
     width: 100%;
-    background-color: #007bff;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
     color: white;
+    background: #383838;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 0.5rem;
-    display: block;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .formButton button {
@@ -110,6 +110,9 @@
     padding: 0.5rem;
     border: none;
     cursor: pointer;
+}
+.formButton:hover {
+    background: #2c2c2c;
 }
 .loginRef{
     margin-top: 1rem;

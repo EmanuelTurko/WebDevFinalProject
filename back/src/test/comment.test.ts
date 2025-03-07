@@ -19,7 +19,6 @@ beforeAll (async () => {
     const res = await request(app)
         .post('/auth/register')
         .send(testUser);
-    console.log(res.body);
     const res2 = await request(app)
         .post('/auth/login')
         .send(testUser);

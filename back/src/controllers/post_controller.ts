@@ -39,14 +39,11 @@ class PostController extends _Controller<Post>{
            try {
                const {id} = req.params;
                const userId = req.body._id;
-               console.log(userId);
-               console.log(id);
                const user = await userModel.findById(userId);
                if (!user) {
                    res.status(404).send('User not found');
                    return;
                }
-               console.log(user);
            const post = await postModel.findById(id);
            if (!post) {
                res.status(404).send('PostTemplate not found');
@@ -69,8 +66,6 @@ class PostController extends _Controller<Post>{
                post.likes = post.likes.filter((username) => username !== user.username);
                post.likesCount -= 1;
                user.likedPosts = user.likedPosts.filter((postId) => postId.toString() !== id);
-               console.log("this post was liked");
-               console.log(user.likedPosts);
                postOwner.likesCount -= 1;
            } else {
                post.likes.push(user.username);

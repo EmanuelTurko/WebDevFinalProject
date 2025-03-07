@@ -11,8 +11,7 @@ beforeAll(async () => {
     app = await appMain();
     await userModel.deleteMany({});
     await postModel.deleteMany({});
-    const res = await request(app).post('/auth/register').send(testUser);
-    console.log(res.body);
+    await request(app).post('/auth/register').send(testUser);
     const res2= await request(app).post('/auth/login').send(testUser);
     testUser.accessToken = res2.body.accessToken;
     testUser.refreshToken = res2.body.refreshToken;
@@ -93,7 +92,6 @@ describe('Post Test', ()=> {
             .set({authorization: 'jwt ' + testUser.accessToken})
             .send({userId: testUser._id});
         expect(res2.body.likes).toContain(testUser.username);
-        console.log(res2.body.likes);
         expect(res2.status).toBe(200);
         expect(res2.body.likesCount).toBe(1);
     });
