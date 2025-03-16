@@ -10,18 +10,18 @@ import fileRoutes from './routes/file_route';
 import userRoutes from './routes/user_route';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req,res,next) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Methods", "*")
-    res.header("Access-Control-Allow-Headers", "*")
-    next();
-});
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 if(process.env.NODE_ENV === 'development'){
     const options ={

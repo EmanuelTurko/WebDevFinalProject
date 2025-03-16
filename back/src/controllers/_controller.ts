@@ -9,21 +9,23 @@ export class _Controller<T>{
         this.model = model;
     }
 
-    async getAll(req:Request,res:Response){
-        try {
-            const {page = 1 , limit = 99} = req.query;
-            const filter = req.query as any;
-            const data = await this.model
-                .find(filter)
-                .sort({createdAt: -1})
-                .skip((Number(page) - 1) * Number(limit))
-                .limit(Number(limit));
+        async getAll(req:Request,res:Response){
+            try {
+                const {page = 1 , limit = 99} = req.query;
+                const filter = req.query as any;
+                let sortOrder: 1 | -1 = this.model.modelName.toLowerCase().includes("comments") ? 1 : -1;
+                let sortField = "updatedAt";
+                const data = await this.model
+                    .find(filter)
+                    .sort({[sortField]: sortOrder})
+                    .skip((Number(page) - 1) * Number(limit))
+                    .limit(Number(limit));
 
-            res.status(200).send(data);
-            } catch(err:any){
-            res.status(400).send({error: err.message});
-        }
-    };
+                res.status(200).send(data);
+                } catch(err:any){
+                res.status(400).send({error: err.message});
+            }
+        };
     async create(req:Request,res:Response){
         try{
             const data = await this.model.create(req.body);

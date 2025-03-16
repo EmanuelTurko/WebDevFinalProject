@@ -26,7 +26,7 @@ const createPost = (post: {content: {text:string, imageUrl?:string}}, accessToke
             });
     return {request, abort: () => abortController.abort()}
 }
-const likePost = (postId: string | undefined, userId : string, accessToken:string | null) => {
+const likePost = (postId: string | undefined, userId? : string, accessToken?:string | null) => {
     const abortController = new AbortController()
     const request = apiClient
         .put<Post>(`/posts/${postId}/like`,{_id: userId},{
@@ -36,5 +36,27 @@ const likePost = (postId: string | undefined, userId : string, accessToken:strin
             signal:abortController.signal})
     return {request, abort: () => abortController.abort()}
 }
+const LikedPosts = (username:string)=> {
+    const abortController = new AbortController()
+    const request = apiClient
+        .get<Post[]>(`/posts`,{
+            params: {filter: JSON.stringify({likes: username})},
+            signal:abortController.signal})
+    return {request, abort: () => abortController.abort()}
+}
+const getMyPosts = (username:string)=> {
+    const abortController = new AbortController()
+    const request = apiClient.get<Post[]>(`/posts`,{
+        params: {owner: username},
+        signal:abortController.signal})
+    return {request, abort: () => abortController.abort()
+    }
+}
+const getPostById = (postId:string|undefined)=> {
+    const abortController = new AbortController()
+    const request = apiClient
+        .get<Post>(`/posts/${postId}`,{signal:abortController.signal})
+    return {request, abort: () => abortController.abort()}
+}
 
-export default {getAllPosts,likePost,createPost}
+export default {getAllPosts,likePost,createPost,LikedPosts,getPostById,getMyPosts}

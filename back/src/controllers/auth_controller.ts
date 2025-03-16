@@ -42,11 +42,9 @@ const register = async (req: Request, res: Response) => {
     let imageUrl;
     if(req.body.imageUrl){
          imageUrl = req.body.imageUrl;
-         console.log("imageUrl",imageUrl);
     } else {
-        imageUrl = 'http://localhost:3001/public/blankAvatar.webp';
+        imageUrl = 'http://localhost:3000/blankAvatar.webp';
     }
-    console.log("imageUrl",imageUrl);
     if(!username){
         res.status(400).send("username is required");
         return;
@@ -82,7 +80,6 @@ const register = async (req: Request, res: Response) => {
             imageUrl: imageUrl,
         });
         await user.save();
-        console.log("user created", user.username);
         res.status(200).send(user);
         return;
     } catch(err:any){
@@ -135,16 +132,13 @@ const logout = async (req: Request, res: Response) => {
         res.status(500).send("Server error: TOKEN_SECRET not configured");
         return
     }
-    console.log("bla");
     jwt.verify(refreshToken, process.env.TOKEN_SECRET, async (err:any, user:any) => {
         if (err) {
             console.log(err.name);
             if (err.name === "TokenExpiredError") {
-                console.log("Token expired");
                 const invalidUser = await userModel.findOne({refreshToken: refreshToken});
                 if (invalidUser) {
                     invalidUser.refreshToken = [];
-                    console.log("Invalid token, force logout");
                     await invalidUser.save();
                     return;
                 }
@@ -157,7 +151,6 @@ const logout = async (req: Request, res: Response) => {
                 return
             }
         }
-        console.log("bla2");
         const userId = user._id;
 
         try {
@@ -176,12 +169,9 @@ const logout = async (req: Request, res: Response) => {
 
             user.refreshToken = user.refreshToken.filter(token => token !== refreshToken);
             await user.save();
-            console.log("Logout successful");
-
             res.status(200).send("Logout successful");
             return
         } catch (err) {
-            console.error("Error during logout:", err);
             res.status(500).send("Internal server error");
             return
         }

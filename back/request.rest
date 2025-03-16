@@ -8,21 +8,45 @@ Content-Type: application/json
   }
 
 ###
-POST http://localhost:3001/auth/login
+POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "admin",
+    "username": "admin1",
+  "email": "hotmail@hotmail.com",
     "password": "Kx6k7syo4cp"
   }
 
 ###
-GET http://localhost:3001/users/admin
+GET http://localhost:3000/users/admin
 
 ###
-PUT http://localhost:3001/posts/6794e90b578e88bb11576a82/like
+PUT http://localhost:3000/posts/6794e90b578e88bb11576a82/like
 Content-Type: application/json
 
 {
     "_id": "679a70d12835a498ef1c102b"
   }
+
+
+###
+GET http://localhost:3000/posts/6794e90b578e88bb11576a82/comments
+###
+POST http://localhost:3000/posts/67cc0fd2b1e9f2fac2619198/comments
+Content-Type: application/json
+
+{
+  "content": "test comment",
+  "owner": "testUser.username",
+  "likes": [],
+ "likesCount": 0
+  }
+
+###
+PUT http://localhost:3000/posts/67cc0fd2b1e9f2fac2619198/comments/67d5403e3ad947fdbaf0bb1b/like
+Content-Type: application/json
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjNDkxMzg2MDllOTBkYTU2ZWY4MTUiLCJyYW5kIjoxNjQyMzQ0NDEsImlhdCI6MTc0MjExOTQ2OSwiZXhwIjoxNzQyNzI0MjY5fQ.HG3UV-btAJcGq0PZ3cRtGhGLAGNzjVN3wVIE5NAaduo
+
+{
+  "_id": "67cb36971dc3a1f85f091391"
+}

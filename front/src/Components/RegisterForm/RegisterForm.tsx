@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faImage} from '@fortawesome/free-solid-svg-icons';
 import {registerSchema} from './RegisterSchema';
 import useRegister from '../../Hooks/useRegister.ts';
-import {User} from "../../Services/Interface/User.ts";
+import {RegisterData} from "../../Services/Interface/RegisterData";
 import uploadImage from "../../Services/uploadImage.ts";
 import {useNavigate} from 'react-router-dom';
 
@@ -31,29 +31,35 @@ const RegisterForm:FC<RegisterFormProps> = ({openLogin}) => {
     useEffect(()=>{
         if(imageUrl){
            setFile(imageUrl[0]);
-           console.log("file");
         }
     },[imageUrl])
 
-    const onFormSubmit = async (data:userFormData) => {
-        const user:User = {
-            username : data.username,
-            email : data.email,
-            password:data.password,
-            imageUrl:'',
-        }
-        if(data.imageUrl){
-            user.imageUrl = await uploadImage(data.imageUrl[0],data.username);
-            console.log(user.imageUrl);
-            if(!user.imageUrl){
-                return;
+    const onFormSubmit = async (data: userFormData) => {
+        const user: RegisterData = {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            imageUrl: '', // Default to empty string
+        };
+
+        // Upload image if provided
+        if (data.imageUrl && data.imageUrl[0]) {
+            try {
+                user.imageUrl = await uploadImage(data.imageUrl[0], data.username);
+            } catch (error) {
+                console.error("Failed to upload image:", error);
             }
         }
-        await registerUser(user).then(()=>{
+
+        // Register the user
+        const response = await registerUser(user);
+        if (response?.success) {
             window.location.reload();
             navigate('/');
-        })
-    }
+        } else {
+            console.error("Registration failed:", response?.error);
+        }
+    };
     const {ref,...rest} = register('imageUrl');
 
     return (

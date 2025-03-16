@@ -24,23 +24,26 @@ class CommentController extends _Controller<Comment>{
                 owner: user.username,
             };
             const comment = await this.model.create(commentData);
-            const savedPost = await comment.save();
+            const savedComment = await comment.save();
 
             await userModel.findByIdAndUpdate(userId, {
                 $push: {
-                    posts: savedPost._id,
+                    comments: savedComment._id
                 }});
-            res.status(201).send(savedPost);
+                    console.log(user?.comments?.length);
+                    console.log(user);
+            res.status(201).send(savedComment);
         } catch(err:any){
             res.status(401).send({error: err.message});
         }
     }
     async like(req:Request, res:Response) {
+        console.log("like");
         try {
             const { id } = req.params;
-            const userId = req.body.userId;
-
-            const user = await userModel.findById(userId);
+            const username = req.body.username;
+            console.log(username);
+            const user = await userModel.find({ username: username });
             if (!user) {
                 res.status(404).send('User not found');
                 return;
@@ -58,18 +61,16 @@ class CommentController extends _Controller<Comment>{
             if (commentOwner.likesCount === undefined) {
                 commentOwner.likesCount = 0;
             }
-            const isLiked = comment.likes.includes(user.username);
+            const isLiked = comment.likes.includes(username);
 
             if (isLiked) {
-                comment.likes = comment.likes.filter((username) => username !== user.username);
+                comment.likes = comment.likes.filter((username) => username !== username);
                 comment.likesCount -= 1;
                 commentOwner.likesCount -= 1;
             } else {
-                comment.likes.push(user.username);
+                comment.likes.push(username);
                 comment.likesCount += 1;
-                console.log(commentOwner.likesCount);
                 commentOwner.likesCount += 1;
-                console.log(commentOwner.likesCount);
             }
 
             await commentOwner.save();

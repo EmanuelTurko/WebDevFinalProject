@@ -1,27 +1,28 @@
-import {useRef, useState} from 'react';
+import { useRef, useState } from 'react';
 import authService, { CanceledError } from "../Services/auth-service.ts";
-import { User } from "../Services/Interface/User.ts";
+import { RegisterData } from "../Services/Interface/RegisterData.ts";
 
 const useRegister = () => {
     const [error, setError] = useState<string | unknown>(null);
-    const [user, setUser] = useState<User | null>(null);
     const abortControllerRef = useRef<() => void>(() => {});
-    const registerUser= async (user: User) => {
+
+    const registerUser = async (user: RegisterData) => {
         try {
-            const {request, abort} = authService.register(user);
+            const { request, abort } = authService.register(user);
             abortControllerRef.current = abort;
             const res = await request;
-            setUser(res.data);
+            return { success: true, data: res.data }; // Return the response data
         } catch (error) {
             if (!(error instanceof CanceledError)) {
                 setError(error);
+                return { success: false, error }; // Return the error
             }
-        } finally{
-            abortControllerRef.current();
+        } finally {
+            abortControllerRef.current(); // Abort the request
         }
     };
 
-    return { user, setUser, error, setError, registerUser};
+    return { error, setError, registerUser }; // Remove user and setUser
 };
 
 export default useRegister;
