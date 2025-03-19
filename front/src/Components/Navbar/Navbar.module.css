@@ -1,0 +1,90 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: rgb(0, 0, 0);
+    border-right: 1px solid silver;
+    z-index: 1000;
+    padding-bottom: 20%;
+}
+
+
+.navbarProfile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    gap: 15px;
+    text-align: center;
+}
+
+
+.navbarProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+.navbarProfile img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.navbarProfile span {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+.navbarLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    color: #ffffff;
+}
+.navLinkHover:hover {
+    cursor: pointer;
+}
+
+
+.navLink {
+    font-size: 22px;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.navLink:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.navLinkHover{
+    cursor: pointer;
+    font-weight:bold;
+}
+.navbarLogo {
+    flex: 1;
+}
+
+.logo {
+    height: 160px;
+    width: auto;
+}

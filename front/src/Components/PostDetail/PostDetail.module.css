@@ -1,0 +1,30 @@
+
+.postDetailContainer {
+    padding: 24px 0;
+}
+
+.card {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.postContent {
+    margin-top: 1.5rem;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.postContent img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.postMeta {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}

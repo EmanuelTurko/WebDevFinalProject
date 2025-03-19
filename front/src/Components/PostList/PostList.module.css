@@ -1,0 +1,63 @@
+.postListContainer {
+    width: 41%;
+    margin: 0 auto;
+    background-color: #000000;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-bottom: 24px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.arrowButton {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+}
+
+.arrowButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    color: gray;
+}
+
+.pageButton {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.pageButton:hover {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.activePage {
+    background-color: gray;
+    color: white;
+}
+
+.pageButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

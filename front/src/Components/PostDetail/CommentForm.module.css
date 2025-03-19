@@ -1,0 +1,50 @@
+.commentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+    align-items: center;
+}
+
+.commentTextarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.commentTextarea:focus {
+    outline: none;
+    border-color: #383838;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.98);
+}
+
+.postButton {
+    width: 20%;
+    background-color: #383838;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 0;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.postButton:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.postButton:hover:not(:disabled) {
+    background-color: #282828;
+}
+
+.errorMessage {
+    color: #ff0000;
+    font-size: 0.875rem;
+    margin-top: 8px;
+}

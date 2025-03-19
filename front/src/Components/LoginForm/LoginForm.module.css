@@ -1,0 +1,119 @@
+.wrapper {
+    width: 430px;
+    overflow: hidden;
+    position: relative;
+}
+.formContainer {
+    display: flex;
+    width: 860px;
+    transition: transform 0.5s ease-in-out;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 430px;
+    background-color: #101010;
+    padding: 25px 40px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.formUsername, .formPassword {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+    position: relative;
+}
+
+.formControl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: calc(2.25rem + 2px);
+    color: #777;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.formControl:focus {
+    color: #777;
+    background-color: #222;
+    border-color: #2a2525;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+.formControl::placeholder {
+    color: #777;
+}
+.form .textDanger {
+    color: rgba(255, 0, 0, 0.71);
+    position: absolute;
+    bottom: 15rem;
+    left: 5px;
+    width: 100%;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.form .formButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background: #383838;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.formButton:hover {
+    background: #2c2c2c;
+}
+.loginRef {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: rgb(98, 100, 103);
+    cursor: pointer;
+}
+.inputFile {
+    display: none;
+}
+.formRememberMe {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.checkbox {
+    margin-right: 8px;
+}
+.checkboxLabel {
+    font-size: 14px;
+    color: #ddd;
+    cursor: pointer;
+}
+.avatarDiv {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: #101010;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.avatar {
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    object-fit: cover;
+}

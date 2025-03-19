@@ -1,0 +1,17 @@
+.formContainer {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+}
+
+.loginForm,
+.registerForm {
+    min-width: 100%;
+}
+
+.pushLeft {
+    transform: translateX(0%);
+}
+
+.pushRight {
+    transform: translateX(0%);
+}
