@@ -25,7 +25,7 @@ app.use(cors({
 }));
 
 
-if(process.env.NODE_ENV === 'development'){
+
     const options ={
         definition:{
             openapi:"3.0.0",
@@ -34,13 +34,15 @@ if(process.env.NODE_ENV === 'development'){
                 version:"1.0.0",
                 description:"REST server including authentication using JWT",
             },
-            servers:[{url:"http://localhost:"+process.env.PORT}],
+            servers:[
+                {url:"http://193.106.55.160"},
+                {url:"localhost:"+process.env.PORT},
+                {url:"https://193.106.55.160"}],
     },
     apis:["./src/routes/*.ts"],
     };
     const specs = swaggerJsDoc(options);
     app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(specs));
-}
 
 
 app.use('/posts', postsRoutes);

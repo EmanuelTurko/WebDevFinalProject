@@ -9,6 +9,8 @@ dotenv.config();
 let isSignedThroughGoogle:boolean = false;
 const generateTokens = (_id: string): {accessToken: string, refreshToken: string} | null => {
     const rand = Math.floor(Math.random() * 1000000000);
+    const token_exp = "15m";
+    const ref_token_exp = "7d";
     if (process.env.TOKEN_SECRET === undefined) {
         console.log("Error: TOKEN_SECRET is not defined");
         return null;
@@ -28,12 +30,12 @@ const generateTokens = (_id: string): {accessToken: string, refreshToken: string
     const accessToken = jwt.sign(
         { _id: _id, rand: rand },
         process.env.TOKEN_SECRET,
-        { expiresIn: process.env.TOKEN_EXP },
+        { expiresIn: token_exp },
     );
     const refreshToken = jwt.sign(
         { _id: _id, rand: rand },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: process.env.REFRESH_TOKEN_EXP },
+        { expiresIn: ref_token_exp },
     );
     return { accessToken, refreshToken };
 }
