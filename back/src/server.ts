@@ -35,9 +35,9 @@ app.use(cors({
                 description:"REST server including authentication using JWT",
             },
             servers:[
-                {url:"http://193.106.55.160"},
+                {url:"http://"+process.env.DOMAIN_BASE},
                 {url:"localhost:"+process.env.PORT},
-                {url:"https://193.106.55.160"}],
+                {url:"https:"+process.env.DOMAIN_BASE}],
     },
     apis:["./src/routes/*.ts"],
     };
