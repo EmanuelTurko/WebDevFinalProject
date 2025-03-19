@@ -60,9 +60,9 @@
 }
 
 .formControl:focus {
-    color: #ffffff;
-    background-color: #495057;
-    border-color: #fdfdfd;
+    color: #424242;
+    background-color: #d9d9da;
+    border-color: #575757;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(37, 38, 38, 0.25);
 }
@@ -122,4 +122,18 @@
 }
 .inputFile{
     display: none;
+}
+.googleLoginWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 73%;
+    position: relative;
+}
+
+
+.googleButton:hover {
+    background-color: #343434;
 }

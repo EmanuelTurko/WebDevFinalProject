@@ -58,5 +58,30 @@ const getPostById = (postId:string|undefined)=> {
         .get<Post>(`/posts/${postId}`,{signal:abortController.signal})
     return {request, abort: () => abortController.abort()}
 }
+const updatePost = (postId:string,post:{content:{text?:string,imageUrl?:string}},accessToken:string|undefined)=> {
+    const abortController = new AbortController()
+    const request = apiClient
+        .put<Post>(`/posts/${postId}`,{
+            content:{
+                text:post.content.text,
+                imageUrl:post.content.imageUrl
+            }
+        },{
+            headers:{
+                Authorization: `JWT ${accessToken}`
+            },
+            signal:abortController.signal})
+    return {request, abort: () => abortController.abort()}
+}
+const deletePost = (postId:string|undefined,accessToken:string|undefined)=> {
+    const abortController = new AbortController()
+    const request = apiClient
+        .delete<Post>(`/posts/${postId}`,{
+            headers:{
+                Authorization: `JWT ${accessToken}`
+            },
+            signal:abortController.signal})
+    return {request, abort: () => abortController.abort()}
+}
 
-export default {getAllPosts,likePost,createPost,LikedPosts,getPostById,getMyPosts}
+export default {getAllPosts,likePost,createPost,LikedPosts,getPostById,getMyPosts,updatePost,deletePost}

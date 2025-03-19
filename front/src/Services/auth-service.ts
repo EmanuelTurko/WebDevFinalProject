@@ -2,6 +2,7 @@ import apiClient,{CanceledError} from './api-client';
 import {User} from './Interface/User';
 import {LoginData} from './Interface/LoginData';
 import {RegisterData} from './Interface/RegisterData';
+import {CredentialResponse} from "@react-oauth/google";
 
 export {CanceledError}
 const register = (user: RegisterData ) => {
@@ -11,7 +12,14 @@ const register = (user: RegisterData ) => {
 
     return {request, abort: () => abortController.abort()}
 }
-const login = (loginData: LoginData) => {
+export const googleRegister = (credentialResponse:CredentialResponse ) => {
+    const abortController = new AbortController()
+    const request = apiClient
+        .post<User>('/auth/google',credentialResponse,{signal:abortController.signal})
+
+    return {request, abort: () => abortController.abort()}
+}
+export const login =async (loginData: LoginData) => {
     const abortController = new AbortController()
     const request = apiClient
         .post<User>('/auth/login',{
@@ -33,4 +41,4 @@ const logout = (refreshToken:string[]) => {
     return {request, abort: () => abortController.abort()}
 }
 
-export default {register,login,logout}
+export default {register,login,logout};

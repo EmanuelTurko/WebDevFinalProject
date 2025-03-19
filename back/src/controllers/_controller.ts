@@ -35,25 +35,26 @@ export class _Controller<T>{
             res.status(401).send({error: err.message});
         }
     };
-    async update(req:Request,res:Response) {
+    async update(req: Request, res: Response) {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
+            const { content } = req.body;
             const updatedData = await this.model.findByIdAndUpdate(
                 id,
-                req.body,
-                {
-                    new: true,
-                });
+                { $set: { content } },
+                { new: true }
+            );
+
             if (!updatedData) {
                 res.status(404).send('Data not found');
                 return;
             }
-            await updatedData.save();
+
             res.status(200).send(updatedData);
         } catch (err: any) {
-            res.status(402).send({error: err.message});
+            res.status(402).send({ error: err.message });
         }
-    };
+    }
     async delete(req:Request,res:Response) {
         try {
             const {id} = req.params;
@@ -90,4 +91,16 @@ export class _Controller<T>{
             res.status(405).send({error: err.message});
         }
     }
+    /*async deleteMany(req:Request,res:Response){
+        try{
+            const {postId} = req.params;
+            const data = await this.model.deleteMany({postId: postId});
+            if(!data){
+                res.status(404).send('Data not found');
+            }
+            res.status(200).send(data);
+        } catch(err:any){
+            res.status(406).send({error: err.message});
+        }
+    }*/
 }

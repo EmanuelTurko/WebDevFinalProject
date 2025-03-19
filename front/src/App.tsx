@@ -57,12 +57,8 @@ function App() {
         </UserProvider>
     );
 }
-//TODO: Edit And Delete user's self posts
-//TODO: Edit And Delete user's self comments
-//TODO: Add AI API to suggest recipes
 //TODO: improve css
 //TODO: Make the remember me checkbox work
 //TODO: add register via google and facebook
-//TODO: add paging to the posts and comments
 
 export default App;

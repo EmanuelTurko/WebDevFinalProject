@@ -113,7 +113,7 @@ describe('Comment Test', () => {
         const res2 = await request(app)
             .put(baseUrl+'/'+commentId+'/like')
             .set({authorization: 'jwt ' + testUser.accessToken})
-            .send({userId: testUser._id});
+            .send({username: testUser.username});
         expect(res2.status).toBe(200);
         expect(res2.body.likes).toContain(testUser.username);
         expect(res2.body.likesCount).toBe(1);
@@ -125,7 +125,7 @@ describe('Comment Test', () => {
         const res2 = await request(app)
             .put(baseUrl+'/'+commentId+'/like')
             .set({authorization: 'jwt ' + testUser.accessToken})
-            .send({userId: testUser._id});
+            .send({username: testUser.username});
         expect(res2.status).toBe(200);
         expect(res2.body.likes).not.toContain(testUser.username);
         expect(res2.body.likesCount).toBe(0);

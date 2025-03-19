@@ -25,7 +25,6 @@ class CommentController extends _Controller<Comment>{
             };
             const comment = await this.model.create(commentData);
             const savedComment = await comment.save();
-
             await userModel.findByIdAndUpdate(userId, {
                 $push: {
                     comments: savedComment._id
@@ -42,7 +41,6 @@ class CommentController extends _Controller<Comment>{
         try {
             const { id } = req.params;
             const username = req.body.username;
-            console.log(username);
             const user = await userModel.find({ username: username });
             if (!user) {
                 res.status(404).send('User not found');
@@ -62,7 +60,6 @@ class CommentController extends _Controller<Comment>{
                 commentOwner.likesCount = 0;
             }
             const isLiked = comment.likes.includes(username);
-
             if (isLiked) {
                 comment.likes = comment.likes.filter((username) => username !== username);
                 comment.likesCount -= 1;
@@ -72,7 +69,6 @@ class CommentController extends _Controller<Comment>{
                 comment.likesCount += 1;
                 commentOwner.likesCount += 1;
             }
-
             await commentOwner.save();
             await comment.save();
             res.status(200).send(comment);

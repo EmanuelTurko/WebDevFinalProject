@@ -6,7 +6,7 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Comments
- *   description: API for managing comments
+ *   description: API for managing comments on posts
  */
 /**
  * @swagger
@@ -14,6 +14,8 @@ const router = express.Router();
  *   schemas:
  *     Comment:
  *       type: object
+ *       required:
+ *         - content
  *       properties:
  *         content:
  *           type: string
@@ -35,13 +37,20 @@ const router = express.Router();
  */
 /**
  * @swagger
- * /comments:
+ * /posts/{postId}/comments:
  *   get:
- *     summary: Retrieve a list of comments
+ *     summary: Retrieve all comments for a post
  *     tags: [Comments]
+ *     parameters:
+ *       - in: path
+ *         name: postId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
  *     responses:
  *       200:
- *         description: A list of comments
+ *         description: A list of comments for the post
  *         content:
  *           application/json:
  *             schema:
@@ -52,11 +61,17 @@ const router = express.Router();
 
 /**
  * @swagger
- * /comments/{id}:
+ * /posts/{postId}/comments/{id}:
  *   get:
  *     summary: Retrieve a single comment by ID
  *     tags: [Comments]
  *     parameters:
+ *       - in: path
+ *         name: postId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
  *       - in: path
  *         name: id
  *         schema:
@@ -76,18 +91,31 @@ const router = express.Router();
 
 /**
  * @swagger
- * /comments:
+ * /posts/{postId}/comments:
  *   post:
- *     summary: Create a new comment
+ *     summary: Create a new comment on a post
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: postId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Comment'
+ *             type: object
+ *             required:
+ *               - content
+ *             properties:
+ *               content:
+ *                 type: string
+ *                 description: The content of the comment
  *     responses:
  *       201:
  *         description: The created comment
@@ -97,17 +125,25 @@ const router = express.Router();
  *               $ref: '#/components/schemas/Comment'
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
  * @swagger
- * /comments/{id}:
+ * /posts/{postId}/comments/{id}:
  *   put:
  *     summary: Update a comment by ID
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - in: path
+ *         name: postId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
  *       - in: path
  *         name: id
  *         schema:
@@ -119,7 +155,11 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Comment'
+ *             type: object
+ *             properties:
+ *               content:
+ *                 type: string
+ *                 description: The updated content of the comment
  *     responses:
  *       200:
  *         description: The updated comment
@@ -129,20 +169,27 @@ const router = express.Router();
  *               $ref: '#/components/schemas/Comment'
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Comment not found
  */
 
-
 /**
  * @swagger
- * /comments/{id}/like:
+ * /posts/{postId}/comments/{id}/like:
  *   put:
  *     summary: Like or unlike a comment by ID
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - in: path
+ *         name: postId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
  *       - in: path
  *         name: id
  *         schema:
@@ -168,18 +215,27 @@ const router = express.Router();
  *               $ref: '#/components/schemas/Comment'
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Comment not found
  */
+
 /**
  * @swagger
- * /comments/{id}:
+ * /posts/{postId}/comments/{id}:
  *   delete:
  *     summary: Delete a comment by ID
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - in: path
+ *         name: postId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
  *       - in: path
  *         name: id
  *         schema:
@@ -189,10 +245,11 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Comment deleted
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Comment not found
  */
-
 
 router.get('/', CommentController.getAll.bind(CommentController));
 router.get('/:id', CommentController.getById.bind(CommentController));
@@ -200,5 +257,6 @@ router.post('/',authMiddleware, CommentController.create.bind(CommentController)
 router.put('/:id',authMiddleware, CommentController.update.bind(CommentController));
 router.put('/:id/like',authMiddleware, CommentController.like.bind(CommentController));
 router.delete('/:id',authMiddleware, CommentController.delete.bind(CommentController));
+//router.delete('/:id',authMiddleware, CommentController.deleteMany.bind(CommentController));
 
 export default router;

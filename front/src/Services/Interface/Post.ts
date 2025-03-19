@@ -4,10 +4,10 @@ export interface Post {
     likes?:string[],
     likesCount?:number,
     _id?:string,
+    createdAt:Date,
+    updatedAt:Date,
 }
 export interface Content{
     text:string,
     imageUrl?:string,
-    createdAt:Date,
-    updatedAt:Date,
 }

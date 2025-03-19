@@ -47,8 +47,6 @@ const PostList: FC = () => {
                     <PostTemplate post={post} />
                 </div>
             ))}
-
-            {/* Pagination Controls */}
             <div className={styles.pagination}>
                 <button
                     className={styles.arrowButton}

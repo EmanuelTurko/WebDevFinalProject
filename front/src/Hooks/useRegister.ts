@@ -11,18 +11,18 @@ const useRegister = () => {
             const { request, abort } = authService.register(user);
             abortControllerRef.current = abort;
             const res = await request;
-            return { success: true, data: res.data }; // Return the response data
+            return { success: true, data: res.data };
         } catch (error) {
             if (!(error instanceof CanceledError)) {
                 setError(error);
-                return { success: false, error }; // Return the error
+                return { success: false, error };
             }
         } finally {
-            abortControllerRef.current(); // Abort the request
+            abortControllerRef.current();
         }
     };
 
-    return { error, setError, registerUser }; // Remove user and setUser
+    return { error, setError, registerUser };
 };
 
 export default useRegister;

@@ -11,6 +11,7 @@ import userRoutes from './routes/user_route';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
+import { getRecipeOfTheDay } from './AiPromptService';
 
 
 const app = express();
@@ -20,8 +21,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: '*',
 }));
+
 
 if(process.env.NODE_ENV === 'development'){
     const options ={
@@ -38,7 +40,6 @@ if(process.env.NODE_ENV === 'development'){
     };
     const specs = swaggerJsDoc(options);
     app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(specs));
-    console.log("Swagger route registered at /api-docs");
 }
 
 
@@ -48,6 +49,15 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/',express.static('public'));
 app.use('/file/', fileRoutes);
+
+app.get('/api/recipe', async (req, res) => {
+    try {
+        const recipe = await getRecipeOfTheDay();
+        res.status(200).json({ recipe });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch recipe' });
+    }
+});
 
 const appMain = async()=> {
     return new Promise<Express>((resolve, reject) => {

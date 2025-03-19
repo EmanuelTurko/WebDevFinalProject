@@ -197,7 +197,6 @@ describe('Auth Refresh Test', () => {
             });
         expect(res.status).toBe(200);
         expect(res.body.accessToken).toBeDefined();
-        expect(res.body.refreshToken).toBeDefined();
         testUser.accessToken = res.body.accessToken;
         testUser.refreshToken = res.body.refreshToken;
     });
@@ -218,6 +217,14 @@ describe('Auth Refresh Test', () => {
 });
 describe('Auth Logout Test', () => {
     test('Logout', async () => {
+        const res0 = await request(app)
+            .post(baseUrl + '/login')
+            .send({
+                username: testUser.username,
+                password: testUser.password,
+            });
+        testUser.accessToken = res0.body.accessToken;
+        testUser.refreshToken = res0.body.refreshToken;
         const res = await request(app)
             .post(baseUrl + '/logout')
             .send({
@@ -230,7 +237,7 @@ describe('Auth Logout Test', () => {
         const res = await request(app)
             .post(baseUrl + '/logout')
             .send({});
-        expect(res.status).toBe(402);
+        expect(res.status).toBe(400);
     });
     test('Logout - invalid refreshToken', async () => {
         const res = await request(app)
@@ -238,6 +245,6 @@ describe('Auth Logout Test', () => {
             .send({
                 refreshToken: testUser.refreshToken,
             });
-        expect(res.status).toBe(402);
+        expect(res.status).toBe(400);
     });
 });

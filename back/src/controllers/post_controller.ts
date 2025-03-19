@@ -38,7 +38,10 @@ class PostController extends _Controller<Post>{
         async like(req:Request,res:Response) {
            try {
                const {id} = req.params;
-               const userId = req.body._id;
+               let userId = req.body._id;
+               if(!userId){
+                   userId = req.body.userId;
+               }
                const user = await userModel.findById(userId);
                if (!user) {
                    res.status(404).send('User not found');
@@ -54,13 +57,15 @@ class PostController extends _Controller<Post>{
                res.status(404).send('Owner not found');
                return;
            }
+           if(postOwner._id.toString() == user._id.toString()){
+               return;
+           }
            if(postOwner.likesCount === undefined){
                postOwner.likesCount = 0
            }
            if(user.likedPosts === undefined){
                 user.likedPosts = []
            }
-
            const isLiked = post.likes.includes(user.username);
            if (isLiked) {
                post.likes = post.likes.filter((username) => username !== user.username);
@@ -76,8 +81,8 @@ class PostController extends _Controller<Post>{
            }
            await user.save();
            await postOwner.save();
-           await post.save();
-       res.status(200).send(post);
+               await post.save();
+               res.status(200).send(post);
        return;
        } catch(err:any){
               res.status(400).send({error: err.message});

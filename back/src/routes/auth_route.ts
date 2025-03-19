@@ -178,5 +178,6 @@ router.post('/refresh', authController.refresh);
  *         description: Unauthorized.
  */
 router.post('/logout', authController.logout);
+router.post('/google', authController.googleSignIn);
 
 export default router;

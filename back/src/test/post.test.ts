@@ -13,9 +13,14 @@ beforeAll(async () => {
     await postModel.deleteMany({});
     await request(app).post('/auth/register').send(testUser);
     const res2= await request(app).post('/auth/login').send(testUser);
+    await request(app).post('/auth/register').send(testUser2);
+    const res3= await request(app).post('/auth/login').send(testUser2);
     testUser.accessToken = res2.body.accessToken;
     testUser.refreshToken = res2.body.refreshToken;
     testUser._id = res2.body._id;
+    testUser2.accessToken = res3.body.accessToken;
+    testUser2.refreshToken = res3.body.refreshToken;
+    testUser2._id = res3.body._id;
 });
 afterAll(async () => {
     await mongoose.connection.close();
@@ -25,6 +30,11 @@ const testUser : User = {
     email: 'test@test.com',
     password:'123456',
 }
+const testUser2 : User = {
+    username: 'test2',
+    email: 'test@test2.com',
+    password:'123456',
+}
 const testPost = {
     content:{
         text: 'test content',
@@ -32,6 +42,7 @@ const testPost = {
     },
     owner: testUser.username,
 }
+let likepostId = '';
 const baseUrl = '/posts';
 describe('Post Test', ()=> {
     test('Get Posts - Empty', async () => {
@@ -46,6 +57,8 @@ describe('Post Test', ()=> {
             .set({authorization: 'jwt ' + testUser.accessToken})
             .send(testPost);
         expect(res.status).toBe(201);
+        likepostId = res.body._id;
+
     });
     test('Get Posts - Not Empty', async () => {
         const res = await request(app)
@@ -58,11 +71,12 @@ describe('Post Test', ()=> {
             .get(baseUrl);
         const postId = res.body[0]._id;
         const res2 = await request(app)
-            .put(baseUrl+'/'+postId)
-            .set({authorization: 'jwt ' + testUser.accessToken})
-            .send({content: 'updated content'});
+            .put(baseUrl + '/' + postId)
+            .set({ authorization: 'jwt ' + testUser.accessToken })
+            .send({ content: { text: 'updated content', imageUrl: 'blank' } });
         expect(res2.status).toBe(200);
-        expect(res2.body.content.text).toBe('updated title');
+        expect(res2.body.content.text).toBe('updated content');
+        expect(res2.body.content.imageUrl).toBe('blank');
     });
     test('Get Post by Id - Not Found', async () => {
         const res = await request(app)
@@ -86,25 +100,23 @@ describe('Post Test', ()=> {
     test('Like Post', async () => {
         const res = await request(app)
             .get(baseUrl);
-        const postId = res.body[0]._id;
         const res2 = await request(app)
-            .put(baseUrl+'/'+postId+'/like')
-            .set({authorization: 'jwt ' + testUser.accessToken})
-            .send({userId: testUser._id});
-        expect(res2.body.likes).toContain(testUser.username);
+            .put(baseUrl+'/'+likepostId+'/like')
+            .set({authorization: 'jwt ' + testUser2.accessToken})
+            .send({userId: testUser2._id});
         expect(res2.status).toBe(200);
+        expect(res2.body.likes).toContain(testUser2.username);
         expect(res2.body.likesCount).toBe(1);
     });
     test('Unlike Post', async () => {
         const res = await request(app)
             .get(baseUrl);
-        const postId = res.body[0]._id;
         const res2 = await request(app)
-            .put(baseUrl+'/'+postId+'/like')
-            .set({authorization: 'jwt ' + testUser.accessToken})
-            .send({userId: testUser._id});
+            .put(baseUrl+'/'+likepostId+'/like')
+            .set({authorization: 'jwt ' + testUser2.accessToken})
+            .send({userId: testUser2._id});
         expect(res2.status).toBe(200);
-        expect(res2.body.likes).not.toContain(testUser.username);
+        expect(res2.body.likes).not.toContain(testUser2.username);
         expect(res2.body.likesCount).toBe(0);
     });
     test('Delete Post', async () => {
