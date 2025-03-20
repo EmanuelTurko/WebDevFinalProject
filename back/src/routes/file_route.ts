@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const base = process.env.DOMAIN_BASE;
 router.post(`/:username`, upload.single('file'), (req, res) => {
-    const fileUrl = `${base}/${req.params.username}/${req.file?.filename}`;
+    const fileUrl = `https://${base}/${req.params.username}/${req.file?.filename}`;
     res.status(200).send({ url: fileUrl });
 });
 export default router;

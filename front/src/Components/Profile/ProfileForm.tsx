@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState, useRef } from "react";
 import styles from "./ProfileForm.module.css";
-import useUserDetails from "../../Hooks/useUserDetails.ts";
-import uploadImage from "../../Services/uploadImage.ts";
-import useUpdateUserDetails from "../../Hooks/useUpdateUserDetails.ts";
-import { useUserContext } from "../Context/UserContext.tsx";
+import useUserDetails from "../../Hooks/useUserDetails";
+import uploadImage from "../../Services/uploadImage";
+import useUpdateUserDetails from "../../Hooks/useUpdateUserDetails";
+import { useUserContext } from "../Context/UserContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 

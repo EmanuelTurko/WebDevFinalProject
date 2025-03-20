@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { User } from "../Services/Interface/User.ts";
-import { fetchUser, CanceledError } from '../Services/user-service.ts';
+import { User } from "../Services/Interface/User";
+import { fetchUser, CanceledError } from '../Services/user-service';
 
 const useUser = (username: string | null | undefined): [User | null, string | null] => {
     const [user, setUser] = useState<User | null>(null);
@@ -21,6 +21,7 @@ const useUser = (username: string | null | undefined): [User | null, string | nu
             })
             .catch((error) => {
                 if (error instanceof CanceledError) {
+                    console.log("error", error);
                 } else {
                     setError(error.message);
                 }

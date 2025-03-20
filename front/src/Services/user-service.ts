@@ -1,5 +1,5 @@
-import apiClient,{CanceledError} from './api-client.ts';
-import {User} from './Interface/User.ts';
+import apiClient,{CanceledError} from './api-client';
+import {User} from './Interface/User';
 
 export {CanceledError}
 export const fetchUser = (username: string, accessToken:string | null) => {

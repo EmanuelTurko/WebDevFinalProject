@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import authService, { CanceledError } from "../Services/auth-service.ts";
-import { RegisterData } from "../Services/Interface/RegisterData.ts";
+import authService, { CanceledError } from "../Services/auth-service";
+import { RegisterData } from "../Services/Interface/RegisterData";
 
 const useRegister = () => {
     const [error, setError] = useState<string | unknown>(null);

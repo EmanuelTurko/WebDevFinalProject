@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import { User } from "../Services/Interface/User.ts";
-import {fetchUserDetails} from '../Services/user-service.ts';
+import { User } from "../Services/Interface/User";
+import {fetchUserDetails} from '../Services/user-service';
 import {CanceledError} from "axios";
 import { AxiosError } from "axios";
 
@@ -31,7 +31,6 @@ const useUserDetails = (username: string | null) => {
                     console.error("Unexpected error type:", error);
                 }
             });
-        console.log(username);
         return () => abort();
     }, [username]);
 

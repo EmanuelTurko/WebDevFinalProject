@@ -1,5 +1,5 @@
-import authService from "../Services/auth-service.ts";
-import { CanceledError } from "../Services/auth-service.ts";
+import authService from "../Services/auth-service";
+import { CanceledError } from "../Services/auth-service";
 import { AxiosError } from "axios";
 import { useCallback, useState } from "react";
 

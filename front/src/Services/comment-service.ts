@@ -1,5 +1,5 @@
-import apiClient,{CanceledError} from "./api-client.ts";
-import {Comment} from "./Interface/Comment.ts";
+import apiClient,{CanceledError} from "./api-client";
+import {Comment} from "./Interface/Comment";
 
 export {CanceledError}
 const getComments = (postId: string | undefined) => {

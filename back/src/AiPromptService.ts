@@ -10,13 +10,12 @@ const genAI = new GoogleGenerativeAI(process.env.AI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 let cachedRecipe: { recipe: string | null; timestamp: number } | null = null;
-const shouldForceNewRecipe = true;
 
 export const getRecipeOfTheDay = async () => {
     const now = Date.now();
-    const oneDay = 24 * 60 * 60 * 1000;
+    const oneDay =60*60*1000*12;
 
-    if (shouldForceNewRecipe || !cachedRecipe || now - cachedRecipe.timestamp >= oneDay) {
+    if ( !cachedRecipe || now - cachedRecipe.timestamp >= oneDay) {
         try {
             const prompt = `
             Generate a unique recipe of the day with the following structure:

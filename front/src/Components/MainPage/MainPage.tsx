@@ -2,7 +2,7 @@ import  {FC} from 'react';
 import PostList from '../PostList/PostList';
 import Navbar from '../Navbar/Navbar';
 import styles from './MainPage.module.css';
-import RecipeOfTheDay from "../Context/AiPromptService/RecipePrompt.tsx";
+import RecipeOfTheDay from "../Context/AiPromptService/RecipePrompt";
 
 const MainPage:FC = () => {
     return (

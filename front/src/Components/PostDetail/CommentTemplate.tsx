@@ -1,10 +1,10 @@
 import { FC, useState, useEffect } from "react";
-import useUserDetails from "../../Hooks/useUserDetails.ts";
+import useUserDetails from "../../Hooks/useUserDetails";
 import styles from './CommentsList.module.css';
-import { Comment } from "../../Services/Interface/Comment.ts";
+import { Comment } from "../../Services/Interface/Comment";
 import { faThumbsUp as ThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CommentService from "../../Services/comment-service.ts";
+import CommentService from "../../Services/comment-service";
 
 interface CommentTemplateProps {
     comment: Comment;

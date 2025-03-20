@@ -43,7 +43,7 @@
   "main": "app.ts",
   "scripts": {
     "start": "cp .env_dev .env && tsc && node ./dist/app.js",
-    "prod": "cp .env_prod .env && tsc -p tsconfig_prod.json &&  node ./dist/app.js",
+    "prod": "cp .env_prod .env && tsc -p tsconfig_prod.json &&   pm2 restart ecosystem.config.js --env production",
     "prod_local": "cp .env_prod_local .env && tsc -p tsconfig_prod.json &&  node ./dist/app.js",
     "mon": "cp .env_dev .env && tsc && nodemon ./dist/app.js",
     "testAll": "cp .env_dev .env && tsc && jest --detectOpenHandles --forceExit --runInBand --coverage",

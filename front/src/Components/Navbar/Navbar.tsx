@@ -6,10 +6,10 @@ import CreatePost from './CreatePost';
 import LoginForm from '../LoginForm/LoginForm';
 import RegisterForm from '../RegisterForm/RegisterForm';
 import blankAvatar from '../../assets/blankAvatar.webp';
-import { useUserContext } from '../Context/UserContext.tsx';
-import {useLikedPostsFilter} from '../Context/LikedFilterContext.tsx';
+import { useUserContext } from '../Context/UserContext';
+import {useLikedPostsFilter} from '../Context/LikedFilterContext';
 import useUser from '../../Hooks/useUser';
-import {useMyPostsFilter} from "../Context/MyPostsFilterContext.tsx";
+import {useMyPostsFilter} from "../Context/MyPostsFilterContext";
 import Logo from '../../assets/Logo.png';
 
 const Navbar: FC = () => {
@@ -98,7 +98,7 @@ const Navbar: FC = () => {
                         </a>
                     </>
                 )}
-                <a className={`${styles.navLink} ${styles.navLinkHover}`} href="/">
+                <a className={`${styles.navLink} ${styles.navLinkHover}`} href="/front/public">
                     🎂 Home
                 </a>
                 <a className={styles.navbarProfile} href="/profile">

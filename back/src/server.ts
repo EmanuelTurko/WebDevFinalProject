@@ -12,6 +12,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import { getRecipeOfTheDay } from './AiPromptService';
+import path from "node:path";
 
 
 const app = express();
@@ -23,9 +24,6 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: '*',
 }));
-
-
-
     const options ={
         definition:{
             openapi:"3.0.0",
@@ -44,13 +42,12 @@ app.use(cors({
     const specs = swaggerJsDoc(options);
     app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(specs));
 
-
 app.use('/posts', postsRoutes);
 app.use('/posts/:postId/comments', commentRoutes);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
-app.use('/',express.static('public'));
 app.use('/file/', fileRoutes);
+
 
 app.get('/api/recipe', async (req, res) => {
     try {
@@ -59,6 +56,11 @@ app.get('/api/recipe', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch recipe' });
     }
+});
+app.use('/',express.static('public'));
+app.use(express.static(path.join(__dirname, '../front')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../front', 'index.html'));
 });
 
 const appMain = async()=> {

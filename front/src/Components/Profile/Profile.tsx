@@ -1,7 +1,7 @@
 import {FC} from "react";
-import Navbar from "../Navbar/Navbar.tsx";
+import Navbar from "../Navbar/Navbar";
 import styles from "../MainPage/MainPage.module.css";
-import ProfileForm from "./ProfileForm.tsx";
+import ProfileForm from "./ProfileForm";
 
 
 const Profile:FC = () => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useUpdatePost from '../../Hooks/useUpdatePost';
 import styles from './CreatePost.module.css';
 import uploadImage from '../../Services/uploadImage';
-import { useRefresh } from '../Context/RefreshContext.tsx';
+import { useRefresh } from '../Context/RefreshContext';
 
 interface UpdatePostProps {
     onClose: () => void;

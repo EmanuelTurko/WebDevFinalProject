@@ -1,5 +1,5 @@
-import apiClient,{CanceledError} from "./api-client.ts";
-import {Post} from "./Interface/Post.ts";
+import apiClient,{CanceledError} from "./api-client";
+import {Post} from "./Interface/Post";
 
 export {CanceledError}
 const getAllPosts = ()=> {

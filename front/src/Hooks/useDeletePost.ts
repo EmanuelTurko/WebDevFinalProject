@@ -1,6 +1,6 @@
-import PostService, { CanceledError } from '../Services/post-service.ts';
+import PostService, { CanceledError } from '../Services/post-service';
 import { useState } from 'react';
-import { useRefresh } from '../Components/Context/RefreshContext.tsx';
+import { useRefresh } from '../Components/Context/RefreshContext';
 
 const useDeletePost = () => {
     const [error, setError] = useState<string | null>(null);

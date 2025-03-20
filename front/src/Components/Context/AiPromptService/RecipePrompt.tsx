@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchRecipeOfTheDay, CanceledError } from '../../../Services/api-client.ts';
+import { fetchRecipeOfTheDay, CanceledError } from '../../../Services/api-client';
 import styles from './RecipePrompt.module.css';
 
 const RecipeOfTheDay: React.FC = () => {
@@ -12,6 +12,7 @@ const RecipeOfTheDay: React.FC = () => {
         description: string;
         details: React.ReactNode[];
     }>({ title: '', description: '', details: [] });
+    const[usefalse] = useState(false);
 
     useEffect(() => {
         const cachedRecipe = localStorage.getItem('recipeOfTheDay');
@@ -19,7 +20,7 @@ const RecipeOfTheDay: React.FC = () => {
         const now = Date.now();
         const oneDay = 24 * 60 * 60 * 1000;
 
-        if (cachedRecipe && cachedTimestamp && now - Number(cachedTimestamp) < oneDay) {
+        if (usefalse&&cachedRecipe && cachedTimestamp && now - Number(cachedTimestamp) < oneDay) {
             try {
                 const parsedRecipe = JSON.parse(cachedRecipe);
                 setRecipe(parsedRecipe);
@@ -121,7 +122,6 @@ const RecipeOfTheDay: React.FC = () => {
                         .split(/,\s*(?![^(]*\))/)
                         .map((item) => item.trim())
                         .filter((item) => item.length > 0);
-                    console.log("Ingredient items:", ingredientItems);
                     const ingredientLines: React.ReactNode[] = [];
                     for (let i = 0; i < ingredientItems.length; i += 2) {
                         const firstItem = ingredientItems[i];

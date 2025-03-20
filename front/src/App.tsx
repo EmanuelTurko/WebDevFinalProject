@@ -1,17 +1,16 @@
-import { RefreshProvider } from './Components/Context/RefreshContext.tsx';
-import { UserProvider } from './Components/Context/UserContext.tsx';
-import { LikedFilterProvider } from './Components/Context/LikedFilterContext.tsx';
-import { MyPostsFilterProvider } from './Components/Context/MyPostsFilterContext.tsx';
+import { RefreshProvider } from './Components/Context/RefreshContext';
+import { UserProvider } from './Components/Context/UserContext';
+import { LikedFilterProvider } from './Components/Context/LikedFilterContext';
+import { MyPostsFilterProvider } from './Components/Context/MyPostsFilterContext';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import PostList from './Components/PostList/PostList';
-import MainPage from './Components/MainPage/MainPage.tsx';
+import MainPage from './Components/MainPage/MainPage';
 import Logout from './Components/Logout/Logout';
-import Profile from './Components/Profile/Profile.tsx';
-import './App.css';
-import { useEffect, useState } from 'react';
-import { useUserContext } from './Components/Context/UserContext.tsx';
+import Profile from './Components/Profile/Profile';
+import  { useEffect, useState } from 'react';
+import { useUserContext } from './Components/Context/UserContext';
 import useUserDetails from './Hooks/useUserDetails';
-import PostDetailsPage from "./Components/PostDetailsPage/PostDetailsPage.tsx";
+import PostDetailsPage from "./Components/PostDetailsPage/PostDetailsPage";
 
 function App() {
     const [flag, setFlag] = useState<boolean>(true);

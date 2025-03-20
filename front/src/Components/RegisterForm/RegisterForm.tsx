@@ -8,13 +8,13 @@ import blankAvatar from '../../assets/blankAvatar.webp';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faImage} from '@fortawesome/free-solid-svg-icons';
 import {registerSchema} from './RegisterSchema';
-import useRegister from '../../Hooks/useRegister.ts';
+import useRegister from '../../Hooks/useRegister';
 import {RegisterData} from "../../Services/Interface/RegisterData";
-import uploadImage from "../../Services/uploadImage.ts";
+import uploadImage from "../../Services/uploadImage";
 import {useNavigate} from 'react-router-dom';
 import {CredentialResponse, GoogleLogin} from "@react-oauth/google";
-import useLogin from "../../Hooks/useLogin.ts";
-import useGoogleSignIn from "../../Hooks/useGoogleRegister.ts";
+import useLogin from "../../Hooks/useLogin";
+import useGoogleSignIn from "../../Hooks/useGoogleRegister";
 
 
 interface RegisterFormProps{

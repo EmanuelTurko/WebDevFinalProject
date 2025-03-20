@@ -48,7 +48,7 @@ const register = async (req: Request, res: Response) => {
     if(req.body.imageUrl){
          imageUrl = req.body.imageUrl;
     } else {
-        imageUrl = 'http://localhost:3000/blankAvatar.webp';
+        imageUrl = 'https://'+process.env.DOMAIN_BASE+'/blankAvatar.webp';
     }
     if(!username){
         res.status(400).send("username is required");

@@ -1,7 +1,7 @@
 import { FC } from "react";
-import useGetComments from "../../Hooks/useGetComments.ts";
+import useGetComments from "../../Hooks/useGetComments";
 import styles from './CommentsList.module.css';
-import CommentTemplate from "./CommentTemplate.tsx"; 
+import CommentTemplate from "./CommentTemplate";
 
 interface CommentsListProps {
     postId: string; 

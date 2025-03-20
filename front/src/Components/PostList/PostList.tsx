@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
 import useGetPosts from '../../Hooks/useGetPosts';
-import PostTemplate from './PostTemplate/PostTemplate.tsx';
-import { useLikedPostsFilter } from '../Context/LikedFilterContext.tsx';
-import { useMyPostsFilter } from '../Context/MyPostsFilterContext.tsx';
-import styles from './postList.module.css';
-import { useRefresh } from "../Context/RefreshContext.tsx";
+import PostTemplate from './PostTemplate/PostTemplate';
+import { useLikedPostsFilter } from '../Context/LikedFilterContext';
+import { useMyPostsFilter } from '../Context/MyPostsFilterContext';
+import styles from './PostList.module.css';
+import { useRefresh } from "../Context/RefreshContext";
 
 const PostList: FC = () => {
     const { refreshKey } = useRefresh();

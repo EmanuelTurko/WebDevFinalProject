@@ -1,8 +1,8 @@
-import { User } from "../Services/Interface/User.ts";
-import authService, { CanceledError } from "../Services/auth-service.ts";
+import { User } from "../Services/Interface/User";
+import authService, { CanceledError } from "../Services/auth-service";
 import { useRef, useState } from "react";
 import { AxiosError } from "axios";
-import apiClient from "../Services/api-client.ts";
+import apiClient from "../Services/api-client";
 
 interface LoginData {
     username: string;

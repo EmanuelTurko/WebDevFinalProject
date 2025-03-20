@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import PostDetail from "../PostDetail/PostDetail";
 import styles from './PostDetailsPage.module.css';
-import CommentsList from "../PostDetail/CommentsList.tsx";
-import CommentForm from "../PostDetail/CommentForm.tsx";
+import CommentsList from "../PostDetail/CommentsList";
+import CommentForm from "../PostDetail/CommentForm";
 
 const PostDetailsPage: FC = () => {
     const { postId } = useParams<{ postId: string }>();

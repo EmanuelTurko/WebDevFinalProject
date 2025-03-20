@@ -1,5 +1,5 @@
 import { useState } from "react";
-import postService from "../Services/post-service"; // Ensure correct import
+import postService from "../Services/post-service";
 
 const useLikes = (postId: string | undefined) => {
   const [likesCount, setLikesCount] = useState<number>(0);

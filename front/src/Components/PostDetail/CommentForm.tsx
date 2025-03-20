@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import useCreateComment from "../../Hooks/useCreateComment.ts";
+import useCreateComment from "../../Hooks/useCreateComment";
 import styles from './CommentForm.module.css';
 
 interface CommentFormProps {

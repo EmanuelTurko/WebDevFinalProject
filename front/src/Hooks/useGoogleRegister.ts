@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CredentialResponse } from "@react-oauth/google";
-import { googleRegister } from "../Services/auth-service"; // Update the import path
+import { googleRegister } from "../Services/auth-service";
 import {User} from "../Services/Interface/User";
 
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import postService, { CanceledError } from '../Services/post-service';
 import { Post } from '../Services/Interface/Post';
-import { useRefresh } from '../Components/Context/RefreshContext.tsx';
+import { useRefresh } from '../Components/Context/RefreshContext';
 
 const useGetLikedPosts = () => {
     const [posts, setPosts] = useState<Post[]>([]);

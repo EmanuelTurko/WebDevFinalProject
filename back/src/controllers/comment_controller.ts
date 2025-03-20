@@ -29,15 +29,12 @@ class CommentController extends _Controller<Comment>{
                 $push: {
                     comments: savedComment._id
                 }});
-                    console.log(user?.comments?.length);
-                    console.log(user);
             res.status(201).send(savedComment);
         } catch(err:any){
             res.status(401).send({error: err.message});
         }
     }
     async like(req:Request, res:Response) {
-        console.log("like");
         try {
             const { id } = req.params;
             const username = req.body.username;
