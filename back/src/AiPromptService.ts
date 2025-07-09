@@ -38,6 +38,7 @@ export const getRecipeOfTheDay = async () => {
             cachedRecipe = { recipe, timestamp: now };
             return recipe;
         } catch (error) {
+            console.error('Error generating recipe:', error);
             throw new Error('Failed to fetch recipe');
         }
     } else {

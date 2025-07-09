@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: '*',
+    allowedHeaders: 'Authorization, Content-Type',
 }));
     const options ={
         definition:{
@@ -54,7 +54,7 @@ app.get('/api/recipe', async (req, res) => {
         const recipe = await getRecipeOfTheDay();
         res.status(200).json({ recipe });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch recipe' });
+        res.status(500).json({ error: 'Failed to fetch recipe..' });
     }
 });
 app.use('/',express.static('public'));
