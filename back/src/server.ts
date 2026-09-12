@@ -58,9 +58,9 @@ app.get('/api/recipe', async (req, res) => {
     }
 });
 app.use('/',express.static('public'));
-app.use(express.static(path.join(__dirname, '../front')));
+app.use(express.static(path.join(__dirname, '../../front')));
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../front', 'index.html'));
+    res.sendFile(path.join(__dirname, '../../front', 'index.html'));
 });
 
 const appMain = async()=> {

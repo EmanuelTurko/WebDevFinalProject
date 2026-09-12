@@ -38,6 +38,10 @@ class PostController extends _Controller<Post>{
         async like(req:Request,res:Response) {
            try {
                const {id} = req.params;
+               if (typeof id !== 'string') {
+                   res.status(400).send('Invalid post id');
+                   return;
+               }
                let userId = req.body._id;
                if(!userId){
                    userId = req.body.userId;

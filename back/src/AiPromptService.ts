@@ -2,20 +2,26 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 
 dotenv.config();
-if (!process.env.AI_API_KEY) {
-    console.error("Error: AI_API_KEY is not defined");
-    process.exit(1);
+
+const aiEnabled = !!process.env.AI_API_KEY;
+if (!aiEnabled) {
+    console.warn("Warning: AI_API_KEY is not defined. Recipe generation will be disabled.");
 }
-const genAI = new GoogleGenerativeAI(process.env.AI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+const genAI = aiEnabled ? new GoogleGenerativeAI(process.env.AI_API_KEY as string) : null;
+const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }) : null;
 
 let cachedRecipe: { recipe: string | null; timestamp: number } | null = null;
 
 export const getRecipeOfTheDay = async () => {
-    const now = Date.now();
-    const oneDay =60*60*1000*12;
+    if (!aiEnabled || !model) {
+        return null;
+    }
 
-    if ( !cachedRecipe || now - cachedRecipe.timestamp >= oneDay) {
+    const now = Date.now();
+    const oneDay = 60 * 60 * 1000 * 12;
+
+    if (!cachedRecipe || now - cachedRecipe.timestamp >= oneDay) {
         try {
             const prompt = `
             Generate a unique recipe of the day with the following structure:
@@ -30,7 +36,7 @@ export const getRecipeOfTheDay = async () => {
             for example Olive oil, 2 tablespoons.
             all of the amounts should be in the same format, instead of ounces use grams, instead of pound use kg
             instead of Fahrenheit use celsius
-           `
+           `;
 
             const result = await model.generateContent(prompt);
             const response = await result.response;
@@ -45,3 +51,5 @@ export const getRecipeOfTheDay = async () => {
         return cachedRecipe.recipe;
     }
 };
+
+export const isAiEnabled = () => aiEnabled;
